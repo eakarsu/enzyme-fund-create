@@ -1,7 +1,7 @@
 import { listAllFunds } from "./../index";
 
-// import { start } from "./create-fund";
-// start();
+import { start } from "./create-fund";
+start();
 
 const SUB_GRAPH_ENDPOINT =
   "https://api.thegraph.com/subgraphs/name/enzymefinance/enzyme";
@@ -11,4 +11,4 @@ const init = async () => {
   console.log(funds);
 };
 
-init();
+//init();
