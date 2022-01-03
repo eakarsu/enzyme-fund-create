@@ -69,6 +69,11 @@ export const createNewFund = async (
     { nonce: nonce, gasLimit: gaslimit }
   );
 
+  let comptrollerProxy = fund.comptrollerProxy;
+  let vaultProxy = fund.vaultProxy;
+
+  console.log ("Fund creaded:"+comptrollerProxy+":"+vaultProxy);
+
   return fund;
 };
 

@@ -1,3 +1,4 @@
+import { StandardToken } from '@enzymefinance/protocol';
 import { ethers, utils } from "ethers";
 import {
   getEntranceRateFeeConfigArgs,
@@ -8,6 +9,23 @@ import {
 import { createNewFund, getManagementFees } from "./../index";
 import { EntranceRateDirectFee } from "../funds/create-fund";
 import { PerformanceFee } from "../funds/create-fund";
+//include aave lending pool contract
+import LendingPool from "../aave/abis/LendingPool.json";
+import {LendingPoolFactory} from "../aave/types/LendingPoolFactory";
+
+const getLendingPool = (signer: ethers.Wallet) => {
+   // GET FundDeployer Interface Data
+   const LendingPoolInterface = new ethers.utils.Interface(
+    JSON.parse(JSON.stringify(LendingPool.abi))
+  );
+  // FundDeployer Contract
+  const lendingPool = new ethers.Contract(
+    "0x839ea1137209c8899F8779e78ce3b426dE7437C5",
+    LendingPoolInterface,
+    signer
+  );
+  return lendingPool;
+}
 
 export const start = async () => {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -21,8 +39,8 @@ export const start = async () => {
     //"0x2c283ea64fe7352dd1b1125723a260524e9ad0a6c0a8008b240f904265c0cfd2";
 
   const signer = new ethers.Wallet(USER_PRIVATE_KEY, provider);
-  //const denominationAsset = "0xd0a1e359811322d97991e03f863a0c30c2cf029c";
-  const denominationAsset = "0x2B0d36FACD61B71CC05ab8F3D2355ec3631C0dd5";
+  //const denominationAsset = "0x038B86d9d8FAFdd0a02ebd1A476432877b0107C8";
+  const denominationAsset = "0xA7c59f010700930003b33aB25a7a0679C860f29c";
   const policyManagerConfigData = utils.hexlify("0x");
 
   const managementFee = "1";
@@ -47,7 +65,23 @@ export const start = async () => {
     USER_ADDRESS,
     true
   );
-
+  
+  /*
+  //aave 
+  const lpAddress = "0x2a4EaBa4c09e59500fE7D97185B631Bb7797eEE4";
+  const lendingPool = await LendingPoolFactory.connect(lpAddress,signer);
+  let nonce = await provider.getTransactionCount(denominationAsset, "pending");
+  
+  let result = await lendingPool.functions["deposit(address,uint256,address,uint16)"](denominationAsset,
+    "1000",signer.address,'1',{gasLimit:  30000000}); //,nonce: nonce});
+  console.log (result);
+  nonce = await provider.getTransactionCount(denominationAsset, "pending");
+  result = await lendingPool.functions["deposit(address,uint256,address,uint16,string,uint256,bytes[])"](denominationAsset,
+    "1000",signer.address,'1',"MY FUND",0,[feeArgsData,policyManagerConfigData],
+    {gasLimit:  30000000});
+  console.log (result);
+  */
+  
   console.log("ARGS", feeArgsData);
   try {
     const fund = await createNewFund(
@@ -57,13 +91,14 @@ export const start = async () => {
       10000,
       feeArgsData!,
       policyManagerConfigData,
-      "10000000",
+      "8000000",
       provider,
       USER_ADDRESS
     );
 
+    console.log("FUND CREATED");
     console.log(fund);
   } catch (error) {
-    console.log(error);
+    console.log("ERROR:"+error);
   }
 };
