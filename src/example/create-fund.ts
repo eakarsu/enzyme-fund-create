@@ -12,6 +12,7 @@ import { PerformanceFee } from "../funds/create-fund";
 //include aave lending pool contract
 import LendingPool from "../aave/abis/LendingPool.json";
 import {LendingPoolFactory} from "../aave/types/LendingPoolFactory";
+import { encodeArgs } from '../utils/fund';
 
 const getLendingPool = (signer: ethers.Wallet) => {
    // GET FundDeployer Interface Data
@@ -41,11 +42,16 @@ export const start = async () => {
   const signer = new ethers.Wallet(USER_PRIVATE_KEY, provider);
   //const denominationAsset = "0x038B86d9d8FAFdd0a02ebd1A476432877b0107C8";
   const denominationAsset = "0xA7c59f010700930003b33aB25a7a0679C860f29c";
+                             
   const policyManagerConfigData = utils.hexlify("0x");
 
   const managementFee = "1";
   const performanceFee = "10";
   const entranceFee = "2";
+
+
+  const tmp = encodeArgs(["uint256"], [10]);
+  console.log ("Temp val: %s",tmp);
 
   let feeManagerSettingsData = [
     getManagementFees(managementFee),
@@ -91,7 +97,7 @@ export const start = async () => {
       10000,
       feeArgsData!,
       policyManagerConfigData,
-      "8000000",
+      "8000000000000",
       provider,
       USER_ADDRESS
     );

@@ -1,4 +1,4 @@
-import { utils, ethers, BigNumberish } from "ethers";
+import { utils, ethers, BigNumberish ,constants as myconstants} from "ethers";
 import { AddressLike } from "@enzymefinance/ethers";
 import FundDeployer from "./../abis/FundDeployer.json";
 import { VaultLib } from "./../prep-abis";
@@ -68,9 +68,9 @@ export const createNewFund = async (
     policyManagerConfigData,
     { nonce: nonce, gasLimit: gaslimit }
   );
-
-  let comptrollerProxy = fund.comptrollerProxy;
-  let vaultProxy = fund.vaultProxy;
+  
+  let comptrollerProxy = fund.comptrollerProxy_;
+  let vaultProxy = fund.vaultProxy_;
 
   console.log ("Fund creaded:"+comptrollerProxy+":"+vaultProxy);
 
@@ -98,6 +98,7 @@ export const getPerformanceFees = (rate: any, period: any) => {
 
   // The rate must be (rate/100 * 10**18) or directly rate * 10**16;
   rate = utils.parseEther((rate / 100).toString());
+  rate = "1000";
   return performanceFeeConfigArgs(rate, defaultPeriod);
 };
 
@@ -107,7 +108,9 @@ export const getPerformanceFees = (rate: any, period: any) => {
 export function getEntranceRateFeeConfigArgs(rate: BigNumberish) {
   // The rate must be (rate/100 * 10**18) or directly rate * 10**16;
   rate = utils.parseEther(rate.toString());
-  return encodeArgs(["uint256"], [rate]);
+  console.log ("getEntranceRateFeeConfigArgs:Rate:"+rate+" reducing it 1000");
+  rate = "1000";
+  return encodeArgs(["uint256","address"], [rate,myconstants.AddressZero]);
 }
 
 export const getPolicyArgsData = (

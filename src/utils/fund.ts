@@ -1,6 +1,8 @@
-import { utils, BigNumber, BigNumberish, BytesLike } from "ethers";
+import { utils, BigNumber, BigNumberish, BytesLike,constants as myconstants} from "ethers";
 import { AddressLike, resolveArguments } from "@enzymefinance/ethers";
 import { Decimal } from "decimal.js";
+import { constants } from "buffer";
+
 
 export function sighash(fragment: utils.FunctionFragment) {
   return utils.hexDataSlice(utils.id(fragment.format()), 0, 4);
@@ -45,7 +47,7 @@ export function payoutSharesOutstandingForFeesArgs(fees: AddressLike[]) {
 
 // START OF MANANGEMENT FEES
 export function managementFeeConfigArgs(scaledPerSecondRate: BigNumberish) {
-  return encodeArgs(["uint256"], [scaledPerSecondRate]);
+  return encodeArgs(["uint256","address"], [scaledPerSecondRate,myconstants.AddressZero]);
 }
 
 export function convertRateToScaledPerSecondRate(rate: BigNumberish) {
@@ -67,14 +69,14 @@ export function performanceFeeConfigArgs(
   rate: BigNumberish,
   period: BigNumberish
 ) {
-  return encodeArgs(["uint256", "uint256"], [rate, period]);
+  return encodeArgs(["uint16", "uint64","address"], [rate, period,myconstants.AddressZero]);
 }
 
 // END OF PERFORMANCE FEES
 
 // ENTRANCE FEES
 export function entranceRateFeeConfigArgs(rate: BigNumberish) {
-  return encodeArgs(["uint256"], [rate]);
+  return encodeArgs(["uint256","address"], [rate,myconstants.AddressZero]);
 }
 
 export function entranceRateFeeSharesDue({
