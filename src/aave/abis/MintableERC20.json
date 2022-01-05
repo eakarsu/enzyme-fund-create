@@ -1,4 +1,5 @@
 {
+  "address": "0x0ed64d01D0B4B655E410EF1441dD677B695639E7",
   "_format": "hh-sol-artifact-1",
   "contractName": "MintableERC20",
   "sourceName": "contracts/mocks/tokens/MintableERC20.sol",

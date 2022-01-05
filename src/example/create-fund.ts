@@ -1,4 +1,4 @@
-import { StandardToken } from '@enzymefinance/protocol';
+
 import { ethers, utils } from "ethers";
 import {
   getEntranceRateFeeConfigArgs,
@@ -28,19 +28,10 @@ const getLendingPool = (signer: ethers.Wallet) => {
   return lendingPool;
 }
 
-export const start = async () => {
-  const provider = new ethers.providers.JsonRpcProvider(
-    //"https://kovan.infura.io/v3/f7f0290fa86240888223b0ad599c71a1"
-  );
-
+export const createSomeNewFund = async (signer:ethers.Wallet,
+  provider:ethers.providers.JsonRpcProvider) => {
+  
   const USER_ADDRESS = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266";
-  //"0xf83F4c3A25b8FEE1722d76e5F72AaFcA00845011";
-  const USER_PRIVATE_KEY = 
-  "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
-    //"0x2c283ea64fe7352dd1b1125723a260524e9ad0a6c0a8008b240f904265c0cfd2";
-
-  const signer = new ethers.Wallet(USER_PRIVATE_KEY, provider);
-  //const denominationAsset = "0x038B86d9d8FAFdd0a02ebd1A476432877b0107C8";
   const denominationAsset = "0xA7c59f010700930003b33aB25a7a0679C860f29c";
                              
   const policyManagerConfigData = utils.hexlify("0x");
@@ -49,9 +40,8 @@ export const start = async () => {
   const performanceFee = "10";
   const entranceFee = "2";
 
-
-  const tmp = encodeArgs(["uint256"], [10]);
-  console.log ("Temp val: %s",tmp);
+  const nonce2 = await provider.getTransactionCount(signer.address, "pending");
+  console.log ("User nonce:"+nonce2);
 
   let feeManagerSettingsData = [
     getManagementFees(managementFee),
@@ -87,10 +77,12 @@ export const start = async () => {
     {gasLimit:  30000000});
   console.log (result);
   */
-  
+  const nonce = await provider.getTransactionCount(signer.address, "pending");
+  console.log ("User nonce:"+nonce);
+
   console.log("ARGS", feeArgsData);
-  try {
-    const fund = await createNewFund(
+
+  let triple = await createNewFund(
       signer,
       "WE FUND 1",
       denominationAsset,
@@ -101,10 +93,9 @@ export const start = async () => {
       provider,
       USER_ADDRESS
     );
-
-    console.log("FUND CREATED");
-    console.log(fund);
-  } catch (error) {
-    console.log("ERROR:"+error);
-  }
+  
+  console.log("FUND CREATED");
+  console.log(triple.receipt);
+  return triple;
+ 
 };

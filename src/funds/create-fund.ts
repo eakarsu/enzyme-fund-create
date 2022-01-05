@@ -1,7 +1,9 @@
-import { utils, ethers, BigNumberish ,constants as myconstants} from "ethers";
-import { AddressLike } from "@enzymefinance/ethers";
-import FundDeployer from "./../abis/FundDeployer.json";
-import { VaultLib } from "./../prep-abis";
+import { utils, ethers, BigNumberish ,BigNumber,constants as myconstants} from "ethers";
+import { AddressLike,extractEvent } from "@enzymefinance/ethers";
+import FundDeployerAbi from "./../abis/FundDeployer.json";
+import { VaultLib as VaultLibAbi } from "./../prep-abis";
+import { assertEvent } from './../utils/assertions';
+import MintableERC20  from "../aave/abis/MintableERC20.json";
 
 import {
   managementFeeConfigArgs,
@@ -21,6 +23,14 @@ import {
   ManagementFee,
   EntranceRateDirectFee,
 } from "./../prep-abis";
+import {
+  ComptrollerLib,
+  ComptrollerProxy,
+  encodeFunctionData,
+  VaultLib,
+  VaultProxy,
+  FundDeployer
+} from '@enzymefinance/protocol';
 
 export {
   PerformanceFee,
@@ -45,37 +55,54 @@ export const createNewFund = async (
   address: string
 ) => {
   const nonce = await provider.getTransactionCount(address, "pending");
-
-  // remove code
+  console.log ("User nonce:"+nonce);
 
   // GET FundDeployer Interface Data
-  const FundDeployerInterface = new ethers.utils.Interface(
-    JSON.parse(JSON.stringify(FundDeployer.abi))
-  );
-  // FundDeployer Contract
-  const fundDeployer = new ethers.Contract(
-    FundDeployer.address,
-    FundDeployerInterface,
-    signer
-  );
-  //0xd0a1e359811322d97991e03f863a0c30c2cf029c
-  const fund = await fundDeployer.createNewFund(
+  let fundDeployer = new FundDeployer(FundDeployerAbi.address,signer);
+  const receipt = await fundDeployer.connect(signer).createNewFund(
     address,
     fundName,
     denominationAsset,
-    timeLockInSeconds,
+    timeLockInSeconds.toString(),
     feeManagerConfig,
-    policyManagerConfigData,
-    { nonce: nonce, gasLimit: gaslimit }
+    policyManagerConfigData
   );
-  
-  let comptrollerProxy = fund.comptrollerProxy_;
-  let vaultProxy = fund.vaultProxy_;
+ 
+  console.log(receipt);
+  let events = extractEvent(receipt, 'ComptrollerProxyDeployed');
+  console.log (JSON.stringify(events));
+  const comptrollerProxyIn = events[0].args.comptrollerProxy;
+  const comptrollerProxy = new ComptrollerLib(comptrollerProxyIn, signer);
+  console.log ("ComptrollerProxyDeployed Event Extracted:"+comptrollerProxy);
 
-  console.log ("Fund creaded:"+comptrollerProxy+":"+vaultProxy);
+  events = extractEvent(receipt, 'NewFundCreated');
+  console.log (JSON.stringify(events));
 
-  return fund;
+  const vaultProxyIn = events[0].args.vaultProxy;
+  const vaultProxy = new VaultLib(vaultProxyIn, signer);
+  console.log ("NewFundCreated Event Extracted:"+vaultProxy);
+
+  return {
+    comptrollerProxy,
+    receipt,
+    vaultProxy,
+  };
 };
+
+export const getMintableToken = async (signer:ethers.Wallet) => {
+   // GET Mintable Token Interface Data
+   const MintableERC20Interface = new ethers.utils.Interface(
+    JSON.parse(JSON.stringify(MintableERC20.abi))
+  );
+  // Mintable Token Contract
+  const mintable = new ethers.Contract(
+    MintableERC20.address,
+    MintableERC20Interface,
+    signer
+  );
+
+  return mintable;
+}
 
 /**
  * Rate is  number representing a 1%
@@ -195,7 +222,7 @@ export async function getAssetDecimals(assetAddress: string, signer: any) {
   try {
     // we use VaultLib as an interface because it has the `decimals()` getter
     const assetInterface = new ethers.utils.Interface(
-      JSON.parse(JSON.stringify(VaultLib.abi))
+      JSON.parse(JSON.stringify(VaultLibAbi.abi))
     );
     const asset = new ethers.Contract(assetAddress, assetInterface, signer);
     const decimals = await asset.decimals();
