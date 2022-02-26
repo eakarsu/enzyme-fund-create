@@ -29,19 +29,16 @@ const getLendingPool = (signer: ethers.Wallet) => {
 }
 
 export const createSomeNewFund = async (signer:ethers.Wallet,
-  provider:ethers.providers.JsonRpcProvider) => {
-  
-  const USER_ADDRESS = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266";
-  const denominationAsset = "0xA7c59f010700930003b33aB25a7a0679C860f29c";
+  provider:ethers.providers.JsonRpcProvider,
+  userAddress:string,
+  denominationAsset:string) => {
                              
   const policyManagerConfigData = utils.hexlify("0x");
 
+  console.log ("policyManagerConfigData:"+policyManagerConfigData);
   const managementFee = "1";
   const performanceFee = "10";
   const entranceFee = "2";
-
-  const nonce2 = await provider.getTransactionCount(signer.address, "pending");
-  console.log ("User nonce:"+nonce2);
 
   let feeManagerSettingsData = [
     getManagementFees(managementFee),
@@ -53,12 +50,18 @@ export const createSomeNewFund = async (signer:ethers.Wallet,
     EntranceRateDirectFee.address,
     PerformanceFee.address,
   ]; // list of address
+  console.log("feeManagerSettingsData:");
+  console.log(feeManagerSettingsData);
 
+  const nonce2 = await provider.getTransactionCount(signer.address, "pending");
+  console.log ("User nonce:"+nonce2);
+
+  
   console.log("DATA", fees, feeManagerSettingsData);
   const feeArgsData = await getFeesManagerConfigArgsData(
     fees,
     feeManagerSettingsData,
-    USER_ADDRESS,
+    userAddress,
     true
   );
   
@@ -91,7 +94,7 @@ export const createSomeNewFund = async (signer:ethers.Wallet,
       policyManagerConfigData,
       "8000000000000",
       provider,
-      USER_ADDRESS
+      userAddress
     );
   
   console.log("FUND CREATED");

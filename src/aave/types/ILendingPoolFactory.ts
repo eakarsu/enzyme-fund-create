@@ -449,49 +449,6 @@ const _abi = [
         name: "referralCode",
         type: "uint16",
       },
-      {
-        internalType: "string",
-        name: "_fundName",
-        type: "string",
-      },
-      {
-        internalType: "uint256",
-        name: "_sharesActionTimelock",
-        type: "uint256",
-      },
-      {
-        internalType: "bytes[]",
-        name: "policies",
-        type: "bytes[]",
-      },
-    ],
-    name: "deposit",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "asset",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "onBehalfOf",
-        type: "address",
-      },
-      {
-        internalType: "uint16",
-        name: "referralCode",
-        type: "uint16",
-      },
     ],
     name: "deposit",
     outputs: [],
@@ -713,6 +670,40 @@ const _abi = [
         name: "asset",
         type: "address",
       },
+      {
+        internalType: "uint256",
+        name: "reserveOrder",
+        type: "uint256",
+      },
+    ],
+    name: "getReserveDataForUser",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "asset",
+        type: "address",
+      },
     ],
     name: "getReserveNormalizedIncome",
     outputs: [
@@ -808,6 +799,35 @@ const _abi = [
         name: "user",
         type: "address",
       },
+      {
+        internalType: "uint256",
+        name: "reserveOrder",
+        type: "uint256",
+      },
+    ],
+    name: "getUserConfig",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
     ],
     name: "getUserConfiguration",
     outputs: [
@@ -864,6 +884,25 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
+        name: "user",
+        type: "address",
+      },
+    ],
+    name: "isUserEmptyConfig",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
         name: "collateralAsset",
         type: "address",
       },
@@ -889,6 +928,24 @@ const _abi = [
       },
     ],
     name: "liquidationCall",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "fromAsset",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "toAsset",
+        type: "address",
+      },
+    ],
+    name: "makeEnzymePool",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

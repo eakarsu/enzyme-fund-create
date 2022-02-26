@@ -28,20 +28,23 @@ interface LendingPoolInterface extends ethers.utils.Interface {
     "MAX_STABLE_RATE_BORROW_SIZE_PERCENT()": FunctionFragment;
     "borrow(address,uint256,uint256,uint16,address)": FunctionFragment;
     "deposit(address,uint256,address,uint16)": FunctionFragment;
-    "depositFund(address,uint256,address,uint16,tuple)": FunctionFragment;
     "finalizeTransfer(address,address,address,uint256,uint256,uint256)": FunctionFragment;
     "flashLoan(address,address[],uint256[],uint256[],address,bytes,uint16)": FunctionFragment;
     "getAddressesProvider()": FunctionFragment;
     "getConfiguration(address)": FunctionFragment;
     "getReserveData(address)": FunctionFragment;
+    "getReserveDataForUser(address,uint256)": FunctionFragment;
     "getReserveNormalizedIncome(address)": FunctionFragment;
     "getReserveNormalizedVariableDebt(address)": FunctionFragment;
     "getReservesList()": FunctionFragment;
     "getUserAccountData(address)": FunctionFragment;
+    "getUserConfig(address,uint256)": FunctionFragment;
     "getUserConfiguration(address)": FunctionFragment;
     "initReserve(address,address,address,address,address)": FunctionFragment;
     "initialize(address)": FunctionFragment;
+    "isUserEmptyConfig(address)": FunctionFragment;
     "liquidationCall(address,address,address,uint256,bool)": FunctionFragment;
+    "makeEnzymePool(address,address)": FunctionFragment;
     "paused()": FunctionFragment;
     "rebalanceStableBorrowRate(address,address)": FunctionFragment;
     "repay(address,uint256,uint256,address)": FunctionFragment;
@@ -78,22 +81,6 @@ interface LendingPoolInterface extends ethers.utils.Interface {
     values: [string, BigNumberish, string, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "depositFund",
-    values: [
-      string,
-      BigNumberish,
-      string,
-      BigNumberish,
-      {
-        fundDeployer: string;
-        fundName: string;
-        sharesActionTimelock: BigNumberish;
-        feeManagerConfigData: BytesLike;
-        policyManagerConfigData: BytesLike;
-      }
-    ]
-  ): string;
-  encodeFunctionData(
     functionFragment: "finalizeTransfer",
     values: [string, string, string, BigNumberish, BigNumberish, BigNumberish]
   ): string;
@@ -122,6 +109,10 @@ interface LendingPoolInterface extends ethers.utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(
+    functionFragment: "getReserveDataForUser",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "getReserveNormalizedIncome",
     values: [string]
   ): string;
@@ -138,6 +129,10 @@ interface LendingPoolInterface extends ethers.utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(
+    functionFragment: "getUserConfig",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "getUserConfiguration",
     values: [string]
   ): string;
@@ -147,8 +142,16 @@ interface LendingPoolInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "initialize", values: [string]): string;
   encodeFunctionData(
+    functionFragment: "isUserEmptyConfig",
+    values: [string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "liquidationCall",
     values: [string, string, string, BigNumberish, boolean]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "makeEnzymePool",
+    values: [string, string]
   ): string;
   encodeFunctionData(functionFragment: "paused", values?: undefined): string;
   encodeFunctionData(
@@ -200,10 +203,6 @@ interface LendingPoolInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "borrow", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "depositFund",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "finalizeTransfer",
     data: BytesLike
   ): Result;
@@ -218,6 +217,10 @@ interface LendingPoolInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getReserveData",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getReserveDataForUser",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -237,6 +240,10 @@ interface LendingPoolInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "getUserConfig",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "getUserConfiguration",
     data: BytesLike
   ): Result;
@@ -246,7 +253,15 @@ interface LendingPoolInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "isUserEmptyConfig",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "liquidationCall",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "makeEnzymePool",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
@@ -391,36 +406,6 @@ export class LendingPool extends Contract {
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    depositFund(
-      asset: string,
-      amount: BigNumberish,
-      onBehalfOf: string,
-      referralCode: BigNumberish,
-      enzymeFundData: {
-        fundDeployer: string;
-        fundName: string;
-        sharesActionTimelock: BigNumberish;
-        feeManagerConfigData: BytesLike;
-        policyManagerConfigData: BytesLike;
-      },
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    "depositFund(address,uint256,address,uint16,(address,string,uint256,bytes,bytes))"(
-      asset: string,
-      amount: BigNumberish,
-      onBehalfOf: string,
-      referralCode: BigNumberish,
-      enzymeFundData: {
-        fundDeployer: string;
-        fundName: string;
-        sharesActionTimelock: BigNumberish;
-        feeManagerConfigData: BytesLike;
-        policyManagerConfigData: BytesLike;
-      },
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
     finalizeTransfer(
       asset: string,
       from: string,
@@ -549,6 +534,18 @@ export class LendingPool extends Contract {
       };
     }>;
 
+    getReserveDataForUser(
+      asset: string,
+      reserveOrder: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "getReserveDataForUser(address,uint256)"(
+      asset: string,
+      reserveOrder: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
     getReserveNormalizedIncome(
       asset: string,
       overrides?: CallOverrides
@@ -621,6 +618,18 @@ export class LendingPool extends Contract {
       5: BigNumber;
     }>;
 
+    getUserConfig(
+      user: string,
+      reserveOrder: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "getUserConfig(address,uint256)"(
+      user: string,
+      reserveOrder: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
     getUserConfiguration(
       user: string,
       overrides?: CallOverrides
@@ -663,6 +672,16 @@ export class LendingPool extends Contract {
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
+    isUserEmptyConfig(
+      user: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "isUserEmptyConfig(address)"(
+      user: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
     liquidationCall(
       collateralAsset: string,
       debtAsset: string,
@@ -678,6 +697,18 @@ export class LendingPool extends Contract {
       user: string,
       debtToCover: BigNumberish,
       receiveAToken: boolean,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    makeEnzymePool(
+      fromAsset: string,
+      toAsset: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "makeEnzymePool(address,address)"(
+      fromAsset: string,
+      toAsset: string,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
@@ -841,36 +872,6 @@ export class LendingPool extends Contract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  depositFund(
-    asset: string,
-    amount: BigNumberish,
-    onBehalfOf: string,
-    referralCode: BigNumberish,
-    enzymeFundData: {
-      fundDeployer: string;
-      fundName: string;
-      sharesActionTimelock: BigNumberish;
-      feeManagerConfigData: BytesLike;
-      policyManagerConfigData: BytesLike;
-    },
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  "depositFund(address,uint256,address,uint16,(address,string,uint256,bytes,bytes))"(
-    asset: string,
-    amount: BigNumberish,
-    onBehalfOf: string,
-    referralCode: BigNumberish,
-    enzymeFundData: {
-      fundDeployer: string;
-      fundName: string;
-      sharesActionTimelock: BigNumberish;
-      feeManagerConfigData: BytesLike;
-      policyManagerConfigData: BytesLike;
-    },
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
   finalizeTransfer(
     asset: string,
     from: string,
@@ -987,6 +988,18 @@ export class LendingPool extends Contract {
     11: number;
   }>;
 
+  getReserveDataForUser(
+    asset: string,
+    reserveOrder: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "getReserveDataForUser(address,uint256)"(
+    asset: string,
+    reserveOrder: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
   getReserveNormalizedIncome(
     asset: string,
     overrides?: CallOverrides
@@ -1047,6 +1060,18 @@ export class LendingPool extends Contract {
     5: BigNumber;
   }>;
 
+  getUserConfig(
+    user: string,
+    reserveOrder: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "getUserConfig(address,uint256)"(
+    user: string,
+    reserveOrder: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
   getUserConfiguration(
     user: string,
     overrides?: CallOverrides
@@ -1085,6 +1110,16 @@ export class LendingPool extends Contract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
+  isUserEmptyConfig(
+    user: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "isUserEmptyConfig(address)"(
+    user: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
   liquidationCall(
     collateralAsset: string,
     debtAsset: string,
@@ -1100,6 +1135,18 @@ export class LendingPool extends Contract {
     user: string,
     debtToCover: BigNumberish,
     receiveAToken: boolean,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  makeEnzymePool(
+    fromAsset: string,
+    toAsset: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "makeEnzymePool(address,address)"(
+    fromAsset: string,
+    toAsset: string,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
@@ -1259,36 +1306,6 @@ export class LendingPool extends Contract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    depositFund(
-      asset: string,
-      amount: BigNumberish,
-      onBehalfOf: string,
-      referralCode: BigNumberish,
-      enzymeFundData: {
-        fundDeployer: string;
-        fundName: string;
-        sharesActionTimelock: BigNumberish;
-        feeManagerConfigData: BytesLike;
-        policyManagerConfigData: BytesLike;
-      },
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    "depositFund(address,uint256,address,uint16,(address,string,uint256,bytes,bytes))"(
-      asset: string,
-      amount: BigNumberish,
-      onBehalfOf: string,
-      referralCode: BigNumberish,
-      enzymeFundData: {
-        fundDeployer: string;
-        fundName: string;
-        sharesActionTimelock: BigNumberish;
-        feeManagerConfigData: BytesLike;
-        policyManagerConfigData: BytesLike;
-      },
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     finalizeTransfer(
       asset: string,
       from: string,
@@ -1405,6 +1422,26 @@ export class LendingPool extends Contract {
       11: number;
     }>;
 
+    getReserveDataForUser(
+      asset: string,
+      reserveOrder: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+      1: BigNumber;
+      2: BigNumber;
+    }>;
+
+    "getReserveDataForUser(address,uint256)"(
+      asset: string,
+      reserveOrder: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+      1: BigNumber;
+      2: BigNumber;
+    }>;
+
     getReserveNormalizedIncome(
       asset: string,
       overrides?: CallOverrides
@@ -1465,6 +1502,24 @@ export class LendingPool extends Contract {
       5: BigNumber;
     }>;
 
+    getUserConfig(
+      user: string,
+      reserveOrder: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: boolean;
+      1: boolean;
+    }>;
+
+    "getUserConfig(address,uint256)"(
+      user: string,
+      reserveOrder: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: boolean;
+      1: boolean;
+    }>;
+
     getUserConfiguration(
       user: string,
       overrides?: CallOverrides
@@ -1500,6 +1555,16 @@ export class LendingPool extends Contract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    isUserEmptyConfig(
+      user: string,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    "isUserEmptyConfig(address)"(
+      user: string,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
     liquidationCall(
       collateralAsset: string,
       debtAsset: string,
@@ -1515,6 +1580,18 @@ export class LendingPool extends Contract {
       user: string,
       debtToCover: BigNumberish,
       receiveAToken: boolean,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    makeEnzymePool(
+      fromAsset: string,
+      toAsset: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "makeEnzymePool(address,address)"(
+      fromAsset: string,
+      toAsset: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1759,36 +1836,6 @@ export class LendingPool extends Contract {
       overrides?: Overrides
     ): Promise<BigNumber>;
 
-    depositFund(
-      asset: string,
-      amount: BigNumberish,
-      onBehalfOf: string,
-      referralCode: BigNumberish,
-      enzymeFundData: {
-        fundDeployer: string;
-        fundName: string;
-        sharesActionTimelock: BigNumberish;
-        feeManagerConfigData: BytesLike;
-        policyManagerConfigData: BytesLike;
-      },
-      overrides?: Overrides
-    ): Promise<BigNumber>;
-
-    "depositFund(address,uint256,address,uint16,(address,string,uint256,bytes,bytes))"(
-      asset: string,
-      amount: BigNumberish,
-      onBehalfOf: string,
-      referralCode: BigNumberish,
-      enzymeFundData: {
-        fundDeployer: string;
-        fundName: string;
-        sharesActionTimelock: BigNumberish;
-        feeManagerConfigData: BytesLike;
-        policyManagerConfigData: BytesLike;
-      },
-      overrides?: Overrides
-    ): Promise<BigNumber>;
-
     finalizeTransfer(
       asset: string,
       from: string,
@@ -1855,6 +1902,18 @@ export class LendingPool extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getReserveDataForUser(
+      asset: string,
+      reserveOrder: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "getReserveDataForUser(address,uint256)"(
+      asset: string,
+      reserveOrder: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
     getReserveNormalizedIncome(
       asset: string,
       overrides?: CallOverrides
@@ -1887,6 +1946,18 @@ export class LendingPool extends Contract {
     "getUserAccountData(address)"(
       user: string,
       overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getUserConfig(
+      user: string,
+      reserveOrder: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "getUserConfig(address,uint256)"(
+      user: string,
+      reserveOrder: BigNumberish,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     getUserConfiguration(
@@ -1924,6 +1995,13 @@ export class LendingPool extends Contract {
       overrides?: Overrides
     ): Promise<BigNumber>;
 
+    isUserEmptyConfig(user: string, overrides?: Overrides): Promise<BigNumber>;
+
+    "isUserEmptyConfig(address)"(
+      user: string,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
     liquidationCall(
       collateralAsset: string,
       debtAsset: string,
@@ -1939,6 +2017,18 @@ export class LendingPool extends Contract {
       user: string,
       debtToCover: BigNumberish,
       receiveAToken: boolean,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    makeEnzymePool(
+      fromAsset: string,
+      toAsset: string,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "makeEnzymePool(address,address)"(
+      fromAsset: string,
+      toAsset: string,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
@@ -2108,36 +2198,6 @@ export class LendingPool extends Contract {
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    depositFund(
-      asset: string,
-      amount: BigNumberish,
-      onBehalfOf: string,
-      referralCode: BigNumberish,
-      enzymeFundData: {
-        fundDeployer: string;
-        fundName: string;
-        sharesActionTimelock: BigNumberish;
-        feeManagerConfigData: BytesLike;
-        policyManagerConfigData: BytesLike;
-      },
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    "depositFund(address,uint256,address,uint16,(address,string,uint256,bytes,bytes))"(
-      asset: string,
-      amount: BigNumberish,
-      onBehalfOf: string,
-      referralCode: BigNumberish,
-      enzymeFundData: {
-        fundDeployer: string;
-        fundName: string;
-        sharesActionTimelock: BigNumberish;
-        feeManagerConfigData: BytesLike;
-        policyManagerConfigData: BytesLike;
-      },
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
     finalizeTransfer(
       asset: string,
       from: string,
@@ -2208,6 +2268,18 @@ export class LendingPool extends Contract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    getReserveDataForUser(
+      asset: string,
+      reserveOrder: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "getReserveDataForUser(address,uint256)"(
+      asset: string,
+      reserveOrder: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
     getReserveNormalizedIncome(
       asset: string,
       overrides?: CallOverrides
@@ -2242,6 +2314,18 @@ export class LendingPool extends Contract {
     "getUserAccountData(address)"(
       user: string,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getUserConfig(
+      user: string,
+      reserveOrder: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "getUserConfig(address,uint256)"(
+      user: string,
+      reserveOrder: BigNumberish,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     getUserConfiguration(
@@ -2282,6 +2366,16 @@ export class LendingPool extends Contract {
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
+    isUserEmptyConfig(
+      user: string,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "isUserEmptyConfig(address)"(
+      user: string,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
     liquidationCall(
       collateralAsset: string,
       debtAsset: string,
@@ -2297,6 +2391,18 @@ export class LendingPool extends Contract {
       user: string,
       debtToCover: BigNumberish,
       receiveAToken: boolean,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    makeEnzymePool(
+      fromAsset: string,
+      toAsset: string,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "makeEnzymePool(address,address)"(
+      fromAsset: string,
+      toAsset: string,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 

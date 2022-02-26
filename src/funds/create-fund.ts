@@ -29,7 +29,8 @@ import {
   encodeFunctionData,
   VaultLib,
   VaultProxy,
-  FundDeployer
+  FundDeployer,
+  FeeSettlementType
 } from '@enzymefinance/protocol';
 
 export {
@@ -110,7 +111,10 @@ export const getMintableToken = async (signer:ethers.Wallet) => {
 export const getManagementFees = (rate: any) => {
   // Must convert from rate to scaledPerSecondRate
   var scaledPerSecondRate = convertRateToScaledPerSecondRate(rate);
-  return managementFeeConfigArgs(scaledPerSecondRate);
+  console.log (`getManagementFees: ${rate} becomes ${scaledPerSecondRate}`);
+  const fee =  managementFeeConfigArgs(scaledPerSecondRate);
+  console.log ("getManagementFees rate="+scaledPerSecondRate+" is "+fee);
+  return fee;
 };
 
 /**
@@ -126,7 +130,9 @@ export const getPerformanceFees = (rate: any, period: any) => {
   // The rate must be (rate/100 * 10**18) or directly rate * 10**16;
   rate = utils.parseEther((rate / 100).toString());
   rate = "1000";
-  return performanceFeeConfigArgs(rate, defaultPeriod);
+  const fee =  performanceFeeConfigArgs(rate, defaultPeriod);
+  console.log ("getPerformanceFees rate="+rate+" is "+fee);
+  return fee;
 };
 
 /**
@@ -137,7 +143,9 @@ export function getEntranceRateFeeConfigArgs(rate: BigNumberish) {
   rate = utils.parseEther(rate.toString());
   console.log ("getEntranceRateFeeConfigArgs:Rate:"+rate+" reducing it 1000");
   rate = "1000";
-  return encodeArgs(["uint256","address"], [rate,myconstants.AddressZero]);
+  const fee = encodeArgs(["uint256","address"], [rate,myconstants.AddressZero]);
+  console.log ("getEntranceRateFeeConfigArgs rate="+rate+" is "+fee);
+  return fee;
 }
 
 export const getPolicyArgsData = (

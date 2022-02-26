@@ -23,7 +23,9 @@ import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 interface IFundDeployerInterface extends ethers.utils.Interface {
   functions: {
     "createNewFund(address,string,address,uint256,bytes,bytes)": FunctionFragment;
+    "getComptrollerLib()": FunctionFragment;
     "getOwner()": FunctionFragment;
+    "getVaultLib()": FunctionFragment;
     "hasReconfigurationRequest(address)": FunctionFragment;
     "isAllowedBuySharesOnBehalfCaller(address)": FunctionFragment;
     "isAllowedVaultCall(address,bytes4,bytes32)": FunctionFragment;
@@ -33,7 +35,15 @@ interface IFundDeployerInterface extends ethers.utils.Interface {
     functionFragment: "createNewFund",
     values: [string, string, string, BigNumberish, BytesLike, BytesLike]
   ): string;
+  encodeFunctionData(
+    functionFragment: "getComptrollerLib",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "getOwner", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "getVaultLib",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "hasReconfigurationRequest",
     values: [string]
@@ -51,7 +61,15 @@ interface IFundDeployerInterface extends ethers.utils.Interface {
     functionFragment: "createNewFund",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "getComptrollerLib",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "getOwner", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "getVaultLib",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "hasReconfigurationRequest",
     data: BytesLike
@@ -102,11 +120,29 @@ export class IFundDeployer extends Contract {
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
+    getComptrollerLib(overrides?: CallOverrides): Promise<{
+      comptrollerLib_: string;
+      0: string;
+    }>;
+
+    "getComptrollerLib()"(overrides?: CallOverrides): Promise<{
+      comptrollerLib_: string;
+      0: string;
+    }>;
+
     getOwner(overrides?: CallOverrides): Promise<{
       0: string;
     }>;
 
     "getOwner()"(overrides?: CallOverrides): Promise<{
+      0: string;
+    }>;
+
+    getVaultLib(overrides?: CallOverrides): Promise<{
+      0: string;
+    }>;
+
+    "getVaultLib()"(overrides?: CallOverrides): Promise<{
       0: string;
     }>;
 
@@ -177,9 +213,17 @@ export class IFundDeployer extends Contract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
+  getComptrollerLib(overrides?: CallOverrides): Promise<string>;
+
+  "getComptrollerLib()"(overrides?: CallOverrides): Promise<string>;
+
   getOwner(overrides?: CallOverrides): Promise<string>;
 
   "getOwner()"(overrides?: CallOverrides): Promise<string>;
+
+  getVaultLib(overrides?: CallOverrides): Promise<string>;
+
+  "getVaultLib()"(overrides?: CallOverrides): Promise<string>;
 
   hasReconfigurationRequest(
     arg0: string,
@@ -246,9 +290,17 @@ export class IFundDeployer extends Contract {
       1: string;
     }>;
 
+    getComptrollerLib(overrides?: CallOverrides): Promise<string>;
+
+    "getComptrollerLib()"(overrides?: CallOverrides): Promise<string>;
+
     getOwner(overrides?: CallOverrides): Promise<string>;
 
     "getOwner()"(overrides?: CallOverrides): Promise<string>;
+
+    getVaultLib(overrides?: CallOverrides): Promise<string>;
+
+    "getVaultLib()"(overrides?: CallOverrides): Promise<string>;
 
     hasReconfigurationRequest(
       arg0: string,
@@ -308,9 +360,17 @@ export class IFundDeployer extends Contract {
       overrides?: Overrides
     ): Promise<BigNumber>;
 
+    getComptrollerLib(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "getComptrollerLib()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     getOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
     "getOwner()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getVaultLib(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "getVaultLib()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     hasReconfigurationRequest(
       arg0: string,
@@ -368,9 +428,19 @@ export class IFundDeployer extends Contract {
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
+    getComptrollerLib(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "getComptrollerLib()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     getOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "getOwner()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getVaultLib(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "getVaultLib()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     hasReconfigurationRequest(
       arg0: string,

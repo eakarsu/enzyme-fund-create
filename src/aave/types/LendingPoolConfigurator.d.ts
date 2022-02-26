@@ -32,6 +32,7 @@ interface LendingPoolConfiguratorInterface extends ethers.utils.Interface {
     "enableReserveStableRate(address)": FunctionFragment;
     "freezeReserve(address)": FunctionFragment;
     "initialize(address)": FunctionFragment;
+    "makeEnzymePool(address,address)": FunctionFragment;
     "setPoolPause(bool)": FunctionFragment;
     "setReserveFactor(address,uint256)": FunctionFragment;
     "setReserveInterestRateStrategyAddress(address,address)": FunctionFragment;
@@ -97,6 +98,10 @@ interface LendingPoolConfiguratorInterface extends ethers.utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(functionFragment: "initialize", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "makeEnzymePool",
+    values: [string, string]
+  ): string;
   encodeFunctionData(
     functionFragment: "setPoolPause",
     values: [boolean]
@@ -191,6 +196,10 @@ interface LendingPoolConfiguratorInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "makeEnzymePool",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "setPoolPause",
     data: BytesLike
@@ -416,6 +425,18 @@ export class LendingPoolConfigurator extends Contract {
 
     "initialize(address)"(
       provider: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    makeEnzymePool(
+      fromAsset: string,
+      toAsset: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "makeEnzymePool(address,address)"(
+      fromAsset: string,
+      toAsset: string,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
@@ -680,6 +701,18 @@ export class LendingPoolConfigurator extends Contract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
+  makeEnzymePool(
+    fromAsset: string,
+    toAsset: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "makeEnzymePool(address,address)"(
+    fromAsset: string,
+    toAsset: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
   setPoolPause(
     val: boolean,
     overrides?: Overrides
@@ -926,6 +959,18 @@ export class LendingPoolConfigurator extends Contract {
 
     "initialize(address)"(
       provider: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    makeEnzymePool(
+      fromAsset: string,
+      toAsset: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "makeEnzymePool(address,address)"(
+      fromAsset: string,
+      toAsset: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1236,6 +1281,18 @@ export class LendingPoolConfigurator extends Contract {
       overrides?: Overrides
     ): Promise<BigNumber>;
 
+    makeEnzymePool(
+      fromAsset: string,
+      toAsset: string,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "makeEnzymePool(address,address)"(
+      fromAsset: string,
+      toAsset: string,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
     setPoolPause(val: boolean, overrides?: Overrides): Promise<BigNumber>;
 
     "setPoolPause(bool)"(
@@ -1489,6 +1546,18 @@ export class LendingPoolConfigurator extends Contract {
 
     "initialize(address)"(
       provider: string,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    makeEnzymePool(
+      fromAsset: string,
+      toAsset: string,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "makeEnzymePool(address,address)"(
+      fromAsset: string,
+      toAsset: string,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 

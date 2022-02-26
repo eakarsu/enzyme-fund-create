@@ -5,8 +5,8 @@
     "aave": {
       "atokens": {
         "aaave": [
-          "0x824541fBb4A46ACbB23f95CE6a8D71A25D123854",
-          "0xfaAddC93baf78e89DCf37bA67943E1bE8F37Bb8c"
+          "0xF9D03709D66e64961b589E88a8a2eA524e1BfA61",
+          "0x02b0B4EFd909240FCB2Eb5FAe060dC60D112E3a4"
         ],
         "abal": [
           "0x272F97b7a56a387aE942350bBC7Df5700f8a4576",
@@ -21,12 +21,12 @@
           "0xd533a949740bb3306d119cc777fa900ba034cd52"
         ],
         "adai": [
-          "0x76F2899A27AE3cA8A14D2D5757065B31C6C5db4b",
-          "0xA7c59f010700930003b33aB25a7a0679C860f29c"
+          "0xFa4AB6F16145d91862D06fE6C830Af14C8Ceda30",
+          "0x01c1DeF3b91672704716159C9041Aeca392DdFfb"
         ],
         "aenj": [
-          "0xaC6Df26a590F08dcC95D5a4705ae8abbc88509Ef",
-          "0xf629cbd94d3791c9250152bd8dfbdf380e2a3b9c"
+          "0xA4A9871aD46B0e1c2898810Bd623E8474ecDA9B7",
+          "0x66F625B8c4c635af8b74ECe2d7eD0D58b4af3C3d"
         ],
         "aknc": [
           "0x39C6b3e42d6A679d7D776778Fe880BC9487C2EDA",
@@ -85,8 +85,8 @@
           "0xE41d2489571d322189246DaFA5ebDe1F4699F498"
         ]
       },
-      "lendingPoolAddressProvider": "0x4bf010f1b9beDA5450a8dD702ED602A104ff65EE",
-      "protocolDataProvider": "0x0Dd99d9f56A14E9D53b2DdC62D9f0bAbe806647A"
+      "lendingPoolAddressProvider": "0x8F4ec854Dd12F1fe79500a1f53D0cbB30f9b6134",
+      "protocolDataProvider": "0x9c65f85425c619A6cB6D29fF8d57ef696323d188"
     },
     "chainlink": {
       "aggregators": {
@@ -120,10 +120,6 @@
         ],
         "busd": [
           "0x614715d2af89e6ec99a233818275142ce88d1cfd",
-          "0"
-        ],
-        "bzrx": [
-          "0x8f7c7181ed1a2ba41cfc3f5d064ef91b67daef66",
           "0"
         ],
         "comp": [
@@ -327,7 +323,7 @@
       }
     },
     "primitives": {
-      "aave": "0xfaAddC93baf78e89DCf37bA67943E1bE8F37Bb8c",
+      "aave": "0x02b0B4EFd909240FCB2Eb5FAe060dC60D112E3a4",
       "adx": "0xade00c28244d5ce17d72e40330b1c318cd12b7c3",
       "ant": "0xa117000000f279d81a1d3cc75430faa017fa5a2e",
       "bal": "0xba100000625a3754423978a60c9317c58a424e3d",
@@ -335,12 +331,11 @@
       "bnb": "0xB8c77482e45F1F44dE1745F52C74426C631bDD52",
       "bnt": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c",
       "busd": "0x4fabb145d64652a948d72533023f6e7a623c7c53",
-      "bzrx": "0x56d811088235f11c8920698a204a5010a788f4b3",
       "comp": "0xc00e94Cb662C3520282E6f5717214004A7f26888",
       "cro": "0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b",
       "crv": "0xd533a949740bb3306d119cc777fa900ba034cd52",
-      "dai": "0xA7c59f010700930003b33aB25a7a0679C860f29c",
-      "enj": "0xf629cbd94d3791c9250152bd8dfbdf380e2a3b9c",
+      "dai": "0x01c1DeF3b91672704716159C9041Aeca392DdFfb",
+      "enj": "0x66F625B8c4c635af8b74ECe2d7eD0D58b4af3C3d",
       "knc": "0xdefa4e8a7bcba345f687a2f1456f5edd9ce97202",
       "kncl": "0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
       "link": "0x514910771af9ca656af840dff83e8264ecf986ca",
@@ -431,7 +426,6 @@
         "bntWeth": "0x3fd4cf9303c4bc9e13772618828712c8eac7dd2f",
         "busdUsdc": "0x524847c615639e76fe7d0fe0b16be8c4eac9cf3c",
         "busdUsdt": "0xa0abda1f980e03d7eadb78aed8fc1f2dd0fe83dd",
-        "bzrxWeth": "0xb9b752f7f4a4680eeb327ffe728f46666763a796",
         "compWeth": "0xcffdded873554f362ac02f8fb1f02e5ada10516f",
         "croWeth": "0x90704ac59e7e54632b0cc9d22573aecd7eb094ad",
         "crvWeth": "0x3da1313ae46132a397d90d95b1424a9a7e3e0fce",

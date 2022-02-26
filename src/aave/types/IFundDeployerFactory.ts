@@ -68,7 +68,33 @@ const _abi = [
   },
   {
     inputs: [],
+    name: "getComptrollerLib",
+    outputs: [
+      {
+        internalType: "address",
+        name: "comptrollerLib_",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "getOwner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getVaultLib",
     outputs: [
       {
         internalType: "address",
