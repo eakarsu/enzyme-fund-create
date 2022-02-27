@@ -654,6 +654,11 @@ const _abi = [
             name: "id",
             type: "uint8",
           },
+          {
+            internalType: "address",
+            name: "vaultAddress",
+            type: "address",
+          },
         ],
         internalType: "struct DataTypes.ReserveData",
         name: "",

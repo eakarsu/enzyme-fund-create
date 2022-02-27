@@ -487,6 +487,7 @@ export class LendingPool extends Contract {
         variableDebtTokenAddress: string;
         interestRateStrategyAddress: string;
         id: number;
+        vaultAddress: string;
         0: { data: BigNumber; 0: BigNumber };
         1: BigNumber;
         2: BigNumber;
@@ -499,6 +500,7 @@ export class LendingPool extends Contract {
         9: string;
         10: string;
         11: number;
+        12: string;
       };
     }>;
 
@@ -519,6 +521,7 @@ export class LendingPool extends Contract {
         variableDebtTokenAddress: string;
         interestRateStrategyAddress: string;
         id: number;
+        vaultAddress: string;
         0: { data: BigNumber; 0: BigNumber };
         1: BigNumber;
         2: BigNumber;
@@ -531,6 +534,7 @@ export class LendingPool extends Contract {
         9: string;
         10: string;
         11: number;
+        12: string;
       };
     }>;
 
@@ -944,6 +948,7 @@ export class LendingPool extends Contract {
     variableDebtTokenAddress: string;
     interestRateStrategyAddress: string;
     id: number;
+    vaultAddress: string;
     0: { data: BigNumber; 0: BigNumber };
     1: BigNumber;
     2: BigNumber;
@@ -956,6 +961,7 @@ export class LendingPool extends Contract {
     9: string;
     10: string;
     11: number;
+    12: string;
   }>;
 
   "getReserveData(address)"(
@@ -974,6 +980,7 @@ export class LendingPool extends Contract {
     variableDebtTokenAddress: string;
     interestRateStrategyAddress: string;
     id: number;
+    vaultAddress: string;
     0: { data: BigNumber; 0: BigNumber };
     1: BigNumber;
     2: BigNumber;
@@ -986,6 +993,7 @@ export class LendingPool extends Contract {
     9: string;
     10: string;
     11: number;
+    12: string;
   }>;
 
   getReserveDataForUser(
@@ -1378,6 +1386,7 @@ export class LendingPool extends Contract {
       variableDebtTokenAddress: string;
       interestRateStrategyAddress: string;
       id: number;
+      vaultAddress: string;
       0: { data: BigNumber; 0: BigNumber };
       1: BigNumber;
       2: BigNumber;
@@ -1390,6 +1399,7 @@ export class LendingPool extends Contract {
       9: string;
       10: string;
       11: number;
+      12: string;
     }>;
 
     "getReserveData(address)"(
@@ -1408,6 +1418,7 @@ export class LendingPool extends Contract {
       variableDebtTokenAddress: string;
       interestRateStrategyAddress: string;
       id: number;
+      vaultAddress: string;
       0: { data: BigNumber; 0: BigNumber };
       1: BigNumber;
       2: BigNumber;
@@ -1420,6 +1431,7 @@ export class LendingPool extends Contract {
       9: string;
       10: string;
       11: number;
+      12: string;
     }>;
 
     getReserveDataForUser(

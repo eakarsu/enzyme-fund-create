@@ -414,6 +414,7 @@ export class ILendingPool extends Contract {
         variableDebtTokenAddress: string;
         interestRateStrategyAddress: string;
         id: number;
+        vaultAddress: string;
         0: { data: BigNumber; 0: BigNumber };
         1: BigNumber;
         2: BigNumber;
@@ -426,6 +427,7 @@ export class ILendingPool extends Contract {
         9: string;
         10: string;
         11: number;
+        12: string;
       };
     }>;
 
@@ -446,6 +448,7 @@ export class ILendingPool extends Contract {
         variableDebtTokenAddress: string;
         interestRateStrategyAddress: string;
         id: number;
+        vaultAddress: string;
         0: { data: BigNumber; 0: BigNumber };
         1: BigNumber;
         2: BigNumber;
@@ -458,6 +461,7 @@ export class ILendingPool extends Contract {
         9: string;
         10: string;
         11: number;
+        12: string;
       };
     }>;
 
@@ -841,6 +845,7 @@ export class ILendingPool extends Contract {
     variableDebtTokenAddress: string;
     interestRateStrategyAddress: string;
     id: number;
+    vaultAddress: string;
     0: { data: BigNumber; 0: BigNumber };
     1: BigNumber;
     2: BigNumber;
@@ -853,6 +858,7 @@ export class ILendingPool extends Contract {
     9: string;
     10: string;
     11: number;
+    12: string;
   }>;
 
   "getReserveData(address)"(
@@ -871,6 +877,7 @@ export class ILendingPool extends Contract {
     variableDebtTokenAddress: string;
     interestRateStrategyAddress: string;
     id: number;
+    vaultAddress: string;
     0: { data: BigNumber; 0: BigNumber };
     1: BigNumber;
     2: BigNumber;
@@ -883,6 +890,7 @@ export class ILendingPool extends Contract {
     9: string;
     10: string;
     11: number;
+    12: string;
   }>;
 
   getReserveDataForUser(
@@ -1245,6 +1253,7 @@ export class ILendingPool extends Contract {
       variableDebtTokenAddress: string;
       interestRateStrategyAddress: string;
       id: number;
+      vaultAddress: string;
       0: { data: BigNumber; 0: BigNumber };
       1: BigNumber;
       2: BigNumber;
@@ -1257,6 +1266,7 @@ export class ILendingPool extends Contract {
       9: string;
       10: string;
       11: number;
+      12: string;
     }>;
 
     "getReserveData(address)"(
@@ -1275,6 +1285,7 @@ export class ILendingPool extends Contract {
       variableDebtTokenAddress: string;
       interestRateStrategyAddress: string;
       id: number;
+      vaultAddress: string;
       0: { data: BigNumber; 0: BigNumber };
       1: BigNumber;
       2: BigNumber;
@@ -1287,6 +1298,7 @@ export class ILendingPool extends Contract {
       9: string;
       10: string;
       11: number;
+      12: string;
     }>;
 
     getReserveDataForUser(
