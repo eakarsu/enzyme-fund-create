@@ -1440,8 +1440,9 @@ export class LendingPool extends Contract {
       overrides?: CallOverrides
     ): Promise<{
       0: string;
-      1: BigNumber;
+      1: string;
       2: BigNumber;
+      3: BigNumber;
     }>;
 
     "getReserveDataForUser(address,uint256)"(
@@ -1450,8 +1451,9 @@ export class LendingPool extends Contract {
       overrides?: CallOverrides
     ): Promise<{
       0: string;
-      1: BigNumber;
+      1: string;
       2: BigNumber;
+      3: BigNumber;
     }>;
 
     getReserveNormalizedIncome(

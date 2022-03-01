@@ -25,6 +25,8 @@ interface EnzymeBridgeInterface extends ethers.utils.Interface {
     "borrow(address,uint256,uint256,address,uint256)": FunctionFragment;
     "createNewFund(address)": FunctionFragment;
     "deposit(address,address,uint256)": FunctionFragment;
+    "getCommonComptroller(address)": FunctionFragment;
+    "getCommonVault(address)": FunctionFragment;
     "initialize(address,address)": FunctionFragment;
     "isCommonFundExist(address)": FunctionFragment;
     "isFundExistForUser(address)": FunctionFragment;
@@ -46,6 +48,14 @@ interface EnzymeBridgeInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "deposit",
     values: [string, string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getCommonComptroller",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getCommonVault",
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
@@ -74,6 +84,14 @@ interface EnzymeBridgeInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "getCommonComptroller",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getCommonVault",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isCommonFundExist",
@@ -145,6 +163,26 @@ export class EnzymeBridge extends Contract {
       owner: string,
       asset: string,
       amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    getCommonComptroller(
+      _asset: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "getCommonComptroller(address)"(
+      _asset: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    getCommonVault(
+      _asset: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "getCommonVault(address)"(
+      _asset: string,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
@@ -248,6 +286,26 @@ export class EnzymeBridge extends Contract {
     owner: string,
     asset: string,
     amount: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  getCommonComptroller(
+    _asset: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "getCommonComptroller(address)"(
+    _asset: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  getCommonVault(
+    _asset: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "getCommonVault(address)"(
+    _asset: string,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
@@ -372,6 +430,23 @@ export class EnzymeBridge extends Contract {
       1: string;
     }>;
 
+    getCommonComptroller(
+      _asset: string,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    "getCommonComptroller(address)"(
+      _asset: string,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    getCommonVault(_asset: string, overrides?: CallOverrides): Promise<string>;
+
+    "getCommonVault(address)"(
+      _asset: string,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
     initialize(
       provider: string,
       commonFundOwner: string,
@@ -484,6 +559,23 @@ export class EnzymeBridge extends Contract {
       overrides?: Overrides
     ): Promise<BigNumber>;
 
+    getCommonComptroller(
+      _asset: string,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "getCommonComptroller(address)"(
+      _asset: string,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    getCommonVault(_asset: string, overrides?: Overrides): Promise<BigNumber>;
+
+    "getCommonVault(address)"(
+      _asset: string,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
     initialize(
       provider: string,
       commonFundOwner: string,
@@ -581,6 +673,26 @@ export class EnzymeBridge extends Contract {
       owner: string,
       asset: string,
       amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    getCommonComptroller(
+      _asset: string,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "getCommonComptroller(address)"(
+      _asset: string,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    getCommonVault(
+      _asset: string,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "getCommonVault(address)"(
+      _asset: string,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 

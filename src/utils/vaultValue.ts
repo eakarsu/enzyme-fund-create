@@ -83,4 +83,9 @@ export async function getFundValue(
 
         const netValue = await fundValueCalculatorRouter.calcNetValueForSharesHolderInAsset.args(vaultProxy, signer, aaveAsset).call()
         console.log ("Net Value for aave calcNetValueForSharesHolderInAsset:"+netValue);
+
+        const result = await fundValueCalculator.connect(signer).calcGav.args(vaultProxy).call();
+        console.log("Denomination Asset:"+result.denominationAsset_);
+        console.log("Fund Value:"+result.gav_);
+
   }

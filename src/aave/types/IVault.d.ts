@@ -45,6 +45,7 @@ interface IVaultInterface extends ethers.utils.Interface {
     "setVaultLib(address)": FunctionFragment;
     "sharesAreFreelyTransferable()": FunctionFragment;
     "transferShares(address,address,uint256)": FunctionFragment;
+    "transferUnderlyingTo(address,address,uint256)": FunctionFragment;
     "withdrawAssetTo(address,address,uint256)": FunctionFragment;
     "withdrawAssetToVault(address,address,uint256)": FunctionFragment;
   };
@@ -127,6 +128,10 @@ interface IVaultInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "transferShares",
+    values: [string, string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferUnderlyingTo",
     values: [string, string, BigNumberish]
   ): string;
   encodeFunctionData(
@@ -213,6 +218,10 @@ interface IVaultInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "transferShares",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "transferUnderlyingTo",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -503,6 +512,20 @@ export class IVault extends Contract {
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
+    transferUnderlyingTo(
+      asset: string,
+      target: string,
+      amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "transferUnderlyingTo(address,address,uint256)"(
+      asset: string,
+      target: string,
+      amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
     withdrawAssetTo(
       arg0: string,
       arg1: string,
@@ -731,6 +754,20 @@ export class IVault extends Contract {
     arg0: string,
     arg1: string,
     arg2: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  transferUnderlyingTo(
+    asset: string,
+    target: string,
+    amount: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "transferUnderlyingTo(address,address,uint256)"(
+    asset: string,
+    target: string,
+    amount: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
@@ -965,6 +1002,20 @@ export class IVault extends Contract {
       arg2: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    transferUnderlyingTo(
+      asset: string,
+      target: string,
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "transferUnderlyingTo(address,address,uint256)"(
+      asset: string,
+      target: string,
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     withdrawAssetTo(
       arg0: string,
@@ -1201,6 +1252,20 @@ export class IVault extends Contract {
       arg0: string,
       arg1: string,
       arg2: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    transferUnderlyingTo(
+      asset: string,
+      target: string,
+      amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "transferUnderlyingTo(address,address,uint256)"(
+      asset: string,
+      target: string,
+      amount: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
@@ -1455,6 +1520,20 @@ export class IVault extends Contract {
       arg0: string,
       arg1: string,
       arg2: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    transferUnderlyingTo(
+      asset: string,
+      target: string,
+      amount: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "transferUnderlyingTo(address,address,uint256)"(
+      asset: string,
+      target: string,
+      amount: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 

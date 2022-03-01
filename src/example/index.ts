@@ -32,25 +32,28 @@ const USER_PRIVATE_KEY = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae78
 const userAddress = "0x70997970c51812dc3a010c7d01b50e0d17dc79c8";
 const USER_PRIVATE_KEY = "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d"; 
 */
-let integrationManagerAddress = "0x9C85258d9A00C01d00ded98065ea3840dF06f09c";
-let fundValueCalculatorAddress = "0xA3f7BF5b0fa93176c260BBa57ceE85525De2BaF4";
-let fundDeployerAddress = "0x90c84237fDdf091b1E63f369AF122EB46000bc70";
-let fundValueCalculatorRouterAddress = "0x76cec9299B6Fa418dc71416FF353737AB7933A7D";
-let valueInterpreterAddress = "0x3a622DB2db50f463dF562Dc5F341545A64C580fc";
-let managementFeeAddress = "0xdB012DD3E3345e2f8D23c0F3cbCb2D94f430Be8C";
-let entranceRateDirectFeeAddress = "0x52173b6ac069619c206b9A0e75609fC92860AB2A";
-let performanceFeeAddress = "0xd977422c9eE9B646f64A4C4389a6C98ad356d8C4";
-let lendingPoolAddressesProviderAddress = "0x8F4ec854Dd12F1fe79500a1f53D0cbB30f9b6134";
-let aaveProtocolDataProviderAddress = "0x9c65f85425c619A6cB6D29fF8d57ef696323d188";
-let enzymeBridgeAddress = "0xE8addD62feD354203d079926a8e563BC1A7FE81e";
+let integrationManagerAddress = "0xbe18A1B61ceaF59aEB6A9bC81AB4FB87D56Ba167";
+let fundValueCalculatorAddress = "0xF45B1CdbA9AACE2e9bbE80bf376CE816bb7E73FB";
+let fundDeployerAddress = "0xBbc18b580256A82dC0F9A86152b8B22E7C1C8005";
+let fundValueCalculatorRouterAddress = "0xc0Bb1650A8eA5dDF81998f17B5319afD656f4c11";
+let valueInterpreterAddress = "0x2BB8B93F585B43b06F3d523bf30C203d3B6d4BD4";
+let managementFeeAddress = "0x6e0a5725dD4071e46356bD974E13F35DbF9ef367";
+let entranceRateDirectFeeAddress = "0xdB012DD3E3345e2f8D23c0F3cbCb2D94f430Be8C";
+let performanceFeeAddress = "0xA9d0Fb5837f9c42c874e16da96094b14Af0e2784";
+let lendingPoolAddressesProviderAddress = "0x12Bcb546bC60fF39F1Adfc7cE4605d5Bd6a6A876";
+let aaveProtocolDataProviderAddress = "0x0c626FC4A447b01554518550e30600136864640B";
+let enzymeBridgeAddress = "0xe70f935c32dA4dB13e7876795f1e175465e6458e";
+let vaultLibAddress = "0x773330693cb7d5D233348E25809770A32483A940";
+let comptrollerLibAddress = "0x666432Ccb747B2220875cE185f487Ed53677faC9";
+
 //Set this manually if required
-let comptrollerProxyAddress = "0xafe315464a16c86b0f30f6207d1c4fdd3f9207fc";
-let vaultProxyAddress = "0x7b9421a637804e0a9cfb4e082fd27647540f64ea";
+let comptrollerProxyAddress = "0xb2db534da1be04149c1c49edb008979b95db4970";
+let vaultProxyAddress = "0x8e825311482e79454ca24ae24570ecd7d0a4282f";
 
 let signer = new ethers.Wallet(USER_PRIVATE_KEY, provider);
-let aaveAddress = "0x02b0B4EFd909240FCB2Eb5FAe060dC60D112E3a4";
-let enjAddress = "0x66F625B8c4c635af8b74ECe2d7eD0D58b4af3C3d";
-let daiAddress = "0x01c1DeF3b91672704716159C9041Aeca392DdFfb";
+let aaveAddress = "0xFD6F7A6a5c21A3f503EBaE7a473639974379c351";
+let enjAddress = "0xefAB0Beb0A557E452b398035eA964948c750b2Fd";
+let daiAddress = "0x6C2d83262fF84cBaDb3e416D527403135D757892";
 
 const registerEnzymeContractsWithAave = async (
   signer:ethers.Wallet) => {
@@ -72,7 +75,9 @@ const registerEnzymeContractsWithAave = async (
                               enzymeBridgeAddress,aaveProtocolDataProviderAddress];
   for (let i=0;i<ids.length;i++){
     const newId = ethers.utils.formatBytes32String(ids[i]);
+      console.log ("Setting address for "+ids[0]+" in "+addresses[i]+" "+newId);
     await lendingPoolAddressProvider.setAddress(newId,addresses[i]);
+    console.log("Confirming "+newId);
     const returnAddress = await lendingPoolAddressProvider.getAddress(newId);
     console.log (`id = ${newId} address=${addresses[i]} returnAddress=${returnAddress}`);
   }
@@ -143,12 +148,9 @@ const getVaultValueAction =async ( signer:ethers.Wallet,
   console.log ("after setReserveFactor");
 }*/
 
-registerEnzymeContractsWithAave(signer);
+//registerEnzymeContractsWithAave(signer);
 //createFundWork(signer,provider);
-/*addTrackedOneAssetToVault(signer,
-  comptrollerProxyAddress,
-  integrationManagerAddress,[denominationAsset,aaveAddress]);
-  */
+
 //createAssetsToFund (signer,provider,comptrollerProxyAddress,aaveAddress, 10000000000);
 
 /*
@@ -159,14 +161,21 @@ moveAssetsToAnotherFund(signer,provider,
   [100]);
   */
 
- /* getFundValue(signer,provider,
+/*addTrackedOneAssetToVault(signer,
+    comptrollerProxyAddress,
+    integrationManagerAddress,[denominationAsset,aaveAddress]);
+*/
+
+ getFundValue(signer,provider,
     fundValueCalculatorAddress,
     fundDeployerAddress,
     fundValueCalculatorRouterAddress,
     valueInterpreterAddress,
-    "0x7345b0b5b02ac1b3caf95e3315551ca472de4a87",
-    aaveAddress);*/
+    comptrollerProxyAddress,
+    aaveAddress);
+
 //enableEnzymeVaultAsAaveTokenPool (signer,lendingPoolConfiguratorAddress,vaultProxyAddress);
+
 
 const SUB_GRAPH_ENDPOINT =
   "https://api.thegraph.com/subgraphs/name/enzymefinance/enzyme";
