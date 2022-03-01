@@ -148,7 +148,7 @@ const getVaultValueAction =async ( signer:ethers.Wallet,
   console.log ("after setReserveFactor");
 }*/
 
-//registerEnzymeContractsWithAave(signer);
+registerEnzymeContractsWithAave(signer);
 //createFundWork(signer,provider);
 
 //createAssetsToFund (signer,provider,comptrollerProxyAddress,aaveAddress, 10000000000);
@@ -165,7 +165,7 @@ moveAssetsToAnotherFund(signer,provider,
     comptrollerProxyAddress,
     integrationManagerAddress,[denominationAsset,aaveAddress]);
 */
-
+/*
  getFundValue(signer,provider,
     fundValueCalculatorAddress,
     fundDeployerAddress,
@@ -173,7 +173,7 @@ moveAssetsToAnotherFund(signer,provider,
     valueInterpreterAddress,
     comptrollerProxyAddress,
     aaveAddress);
-
+*/
 //enableEnzymeVaultAsAaveTokenPool (signer,lendingPoolConfiguratorAddress,vaultProxyAddress);
 
 

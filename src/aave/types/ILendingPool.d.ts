@@ -29,7 +29,7 @@ interface ILendingPoolInterface extends ethers.utils.Interface {
     "getAddressesProvider()": FunctionFragment;
     "getConfiguration(address)": FunctionFragment;
     "getReserveData(address)": FunctionFragment;
-    "getReserveDataForUser(address,uint256)": FunctionFragment;
+    "getReserveDataForUser(uint256)": FunctionFragment;
     "getReserveNormalizedIncome(address)": FunctionFragment;
     "getReserveNormalizedVariableDebt(address)": FunctionFragment;
     "getReservesList()": FunctionFragment;
@@ -89,7 +89,7 @@ interface ILendingPoolInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "getReserveDataForUser",
-    values: [string, BigNumberish]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getReserveNormalizedIncome",
@@ -466,13 +466,11 @@ export class ILendingPool extends Contract {
     }>;
 
     getReserveDataForUser(
-      asset: string,
       reserveOrder: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    "getReserveDataForUser(address,uint256)"(
-      asset: string,
+    "getReserveDataForUser(uint256)"(
       reserveOrder: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
@@ -894,13 +892,11 @@ export class ILendingPool extends Contract {
   }>;
 
   getReserveDataForUser(
-    asset: string,
     reserveOrder: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  "getReserveDataForUser(address,uint256)"(
-    asset: string,
+  "getReserveDataForUser(uint256)"(
     reserveOrder: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
@@ -1302,7 +1298,6 @@ export class ILendingPool extends Contract {
     }>;
 
     getReserveDataForUser(
-      asset: string,
       reserveOrder: BigNumberish,
       overrides?: CallOverrides
     ): Promise<{
@@ -1312,8 +1307,7 @@ export class ILendingPool extends Contract {
       3: BigNumber;
     }>;
 
-    "getReserveDataForUser(address,uint256)"(
-      asset: string,
+    "getReserveDataForUser(uint256)"(
       reserveOrder: BigNumberish,
       overrides?: CallOverrides
     ): Promise<{
@@ -1757,13 +1751,11 @@ export class ILendingPool extends Contract {
     ): Promise<BigNumber>;
 
     getReserveDataForUser(
-      asset: string,
       reserveOrder: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
-    "getReserveDataForUser(address,uint256)"(
-      asset: string,
+    "getReserveDataForUser(uint256)"(
       reserveOrder: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
@@ -2084,13 +2076,11 @@ export class ILendingPool extends Contract {
     ): Promise<PopulatedTransaction>;
 
     getReserveDataForUser(
-      asset: string,
       reserveOrder: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    "getReserveDataForUser(address,uint256)"(
-      asset: string,
+    "getReserveDataForUser(uint256)"(
       reserveOrder: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;

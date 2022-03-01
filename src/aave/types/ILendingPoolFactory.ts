@@ -671,11 +671,6 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "address",
-        name: "asset",
-        type: "address",
-      },
-      {
         internalType: "uint256",
         name: "reserveOrder",
         type: "uint256",
