@@ -5,8 +5,8 @@
     "aave": {
       "atokens": {
         "aaave": [
-          "0x1D59060F43B912b11B5D9F281678EB102DB7AC1C",
-          "0xFD6F7A6a5c21A3f503EBaE7a473639974379c351"
+          "0x9E97b5f8B26cdd83444a56E24598fC39a8c78610",
+          "0xa6e99A4ED7498b3cdDCBB61a6A607a4925Faa1B7"
         ],
         "abal": [
           "0x272F97b7a56a387aE942350bBC7Df5700f8a4576",
@@ -21,12 +21,12 @@
           "0xd533a949740bb3306d119cc777fa900ba034cd52"
         ],
         "adai": [
-          "0x68A76207001466bd19F54A39a81B3011e6176eC5",
-          "0x6C2d83262fF84cBaDb3e416D527403135D757892"
+          "0x95FA4f12fe261f4c060eB8694627e50Cc20018E2",
+          "0xFD6F7A6a5c21A3f503EBaE7a473639974379c351"
         ],
         "aenj": [
-          "0x18483FF100715E3ac81373AEFe7d82211592cC17",
-          "0xefAB0Beb0A557E452b398035eA964948c750b2Fd"
+          "0x841a1e557d37320a372fC7F1ec78299C38AC79f9",
+          "0xaca81583840B1bf2dDF6CDe824ada250C1936B4D"
         ],
         "aknc": [
           "0x39C6b3e42d6A679d7D776778Fe880BC9487C2EDA",
@@ -86,7 +86,7 @@
         ]
       },
       "lendingPoolAddressProvider": "0x12Bcb546bC60fF39F1Adfc7cE4605d5Bd6a6A876",
-      "protocolDataProvider": "0x0c626FC4A447b01554518550e30600136864640B"
+      "protocolDataProvider": "0xA21DDc1f17dF41589BC6A5209292AED2dF61Cc94"
     },
     "chainlink": {
       "aggregators": {
@@ -323,7 +323,7 @@
       }
     },
     "primitives": {
-      "aave": "0xFD6F7A6a5c21A3f503EBaE7a473639974379c351",
+      "aave": "0xa6e99A4ED7498b3cdDCBB61a6A607a4925Faa1B7",
       "adx": "0xade00c28244d5ce17d72e40330b1c318cd12b7c3",
       "ant": "0xa117000000f279d81a1d3cc75430faa017fa5a2e",
       "bal": "0xba100000625a3754423978a60c9317c58a424e3d",
@@ -334,8 +334,8 @@
       "comp": "0xc00e94Cb662C3520282E6f5717214004A7f26888",
       "cro": "0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b",
       "crv": "0xd533a949740bb3306d119cc777fa900ba034cd52",
-      "dai": "0x6C2d83262fF84cBaDb3e416D527403135D757892",
-      "enj": "0xefAB0Beb0A557E452b398035eA964948c750b2Fd",
+      "dai": "0xFD6F7A6a5c21A3f503EBaE7a473639974379c351",
+      "enj": "0xaca81583840B1bf2dDF6CDe824ada250C1936B4D",
       "knc": "0xdefa4e8a7bcba345f687a2f1456f5edd9ce97202",
       "kncl": "0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
       "link": "0x514910771af9ca656af840dff83e8264ecf986ca",

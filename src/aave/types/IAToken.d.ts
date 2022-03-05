@@ -31,6 +31,7 @@ interface IATokenInterface extends ethers.utils.Interface {
     "getScaledUserBalanceAndSupply(address)": FunctionFragment;
     "handleRepayment(address,uint256)": FunctionFragment;
     "initialize(address,address,address,address,uint8,string,string,bytes)": FunctionFragment;
+    "justBurn(address,address,uint256,uint256)": FunctionFragment;
     "mint(address,uint256,uint256)": FunctionFragment;
     "mintToTreasury(uint256,uint256)": FunctionFragment;
     "scaledBalanceOf(address)": FunctionFragment;
@@ -83,6 +84,10 @@ interface IATokenInterface extends ethers.utils.Interface {
       string,
       BytesLike
     ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "justBurn",
+    values: [string, string, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "mint",
@@ -142,6 +147,7 @@ interface IATokenInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "justBurn", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "mintToTreasury",
@@ -327,6 +333,22 @@ export class IAToken extends Contract {
       aTokenName: string,
       aTokenSymbol: string,
       params: BytesLike,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    justBurn(
+      user: string,
+      receiverOfUnderlying: string,
+      amount: BigNumberish,
+      index: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "justBurn(address,address,uint256,uint256)"(
+      user: string,
+      receiverOfUnderlying: string,
+      amount: BigNumberish,
+      index: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
@@ -546,6 +568,22 @@ export class IAToken extends Contract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
+  justBurn(
+    user: string,
+    receiverOfUnderlying: string,
+    amount: BigNumberish,
+    index: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "justBurn(address,address,uint256,uint256)"(
+    user: string,
+    receiverOfUnderlying: string,
+    amount: BigNumberish,
+    index: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
   mint(
     user: string,
     amount: BigNumberish,
@@ -744,6 +782,22 @@ export class IAToken extends Contract {
       aTokenName: string,
       aTokenSymbol: string,
       params: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    justBurn(
+      user: string,
+      receiverOfUnderlying: string,
+      amount: BigNumberish,
+      index: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "justBurn(address,address,uint256,uint256)"(
+      user: string,
+      receiverOfUnderlying: string,
+      amount: BigNumberish,
+      index: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -983,6 +1037,22 @@ export class IAToken extends Contract {
       overrides?: Overrides
     ): Promise<BigNumber>;
 
+    justBurn(
+      user: string,
+      receiverOfUnderlying: string,
+      amount: BigNumberish,
+      index: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "justBurn(address,address,uint256,uint256)"(
+      user: string,
+      receiverOfUnderlying: string,
+      amount: BigNumberish,
+      index: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
     mint(
       user: string,
       amount: BigNumberish,
@@ -1190,6 +1260,22 @@ export class IAToken extends Contract {
       aTokenName: string,
       aTokenSymbol: string,
       params: BytesLike,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    justBurn(
+      user: string,
+      receiverOfUnderlying: string,
+      amount: BigNumberish,
+      index: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "justBurn(address,address,uint256,uint256)"(
+      user: string,
+      receiverOfUnderlying: string,
+      amount: BigNumberish,
+      index: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 

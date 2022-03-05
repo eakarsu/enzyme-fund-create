@@ -684,11 +684,6 @@ const _abi = [
         type: "address",
       },
       {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-      {
         internalType: "uint256",
         name: "",
         type: "uint256",
@@ -933,24 +928,6 @@ const _abi = [
       },
     ],
     name: "liquidationCall",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "fromAsset",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "toAsset",
-        type: "address",
-      },
-    ],
-    name: "makeEnzymePool",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

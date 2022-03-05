@@ -32,28 +32,28 @@ const USER_PRIVATE_KEY = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae78
 const userAddress = "0x70997970c51812dc3a010c7d01b50e0d17dc79c8";
 const USER_PRIVATE_KEY = "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d"; 
 */
-let integrationManagerAddress = "0xbe18A1B61ceaF59aEB6A9bC81AB4FB87D56Ba167";
-let fundValueCalculatorAddress = "0xF45B1CdbA9AACE2e9bbE80bf376CE816bb7E73FB";
-let fundDeployerAddress = "0xBbc18b580256A82dC0F9A86152b8B22E7C1C8005";
-let fundValueCalculatorRouterAddress = "0xc0Bb1650A8eA5dDF81998f17B5319afD656f4c11";
-let valueInterpreterAddress = "0x2BB8B93F585B43b06F3d523bf30C203d3B6d4BD4";
-let managementFeeAddress = "0x6e0a5725dD4071e46356bD974E13F35DbF9ef367";
-let entranceRateDirectFeeAddress = "0xdB012DD3E3345e2f8D23c0F3cbCb2D94f430Be8C";
-let performanceFeeAddress = "0xA9d0Fb5837f9c42c874e16da96094b14Af0e2784";
-let lendingPoolAddressesProviderAddress = "0x12Bcb546bC60fF39F1Adfc7cE4605d5Bd6a6A876";
-let aaveProtocolDataProviderAddress = "0x0c626FC4A447b01554518550e30600136864640B";
-let enzymeBridgeAddress = "0xe70f935c32dA4dB13e7876795f1e175465e6458e";
-let vaultLibAddress = "0x773330693cb7d5D233348E25809770A32483A940";
-let comptrollerLibAddress = "0x666432Ccb747B2220875cE185f487Ed53677faC9";
+let integrationManagerAddress = "0x25C0a2F0A077F537Bd11897F04946794c2f6f1Ef";
+let fundValueCalculatorAddress = "0x22b1c5C2C9251622f7eFb76E356104E5aF0e996A";
+let fundDeployerAddress = "0xB9d9e972100a1dD01cd441774b45b5821e136043";
+let fundValueCalculatorRouterAddress = "0x5322471a7E37Ac2B8902cFcba84d266b37D811A0";
+let valueInterpreterAddress = "0xB7ca895F81F20e05A5eb11B05Cbaab3DAe5e23cd";
+let managementFeeAddress = "0xA9d0Fb5837f9c42c874e16da96094b14Af0e2784";
+let entranceRateDirectFeeAddress = "0xd977422c9eE9B646f64A4C4389a6C98ad356d8C4";
+let performanceFeeAddress = "0x6B21b3ae41f818Fc91e322b53f8D0773d31eCB75";
+let lendingPoolAddressesProviderAddress = "0xaC47e91215fb80462139756f43438402998E4A3a";
+let aaveProtocolDataProviderAddress = "0xA21DDc1f17dF41589BC6A5209292AED2dF61Cc94";
+let enzymeBridgeAddress = "0x3C15538ED063e688c8DF3d571Cb7a0062d2fB18D";
+let vaultLibAddress = "0x52173b6ac069619c206b9A0e75609fC92860AB2A";
+let comptrollerLibAddress = "0xeC1BB74f5799811c0c1Bff94Ef76Fb40abccbE4a";
 
 //Set this manually if required
 let comptrollerProxyAddress = "0xb2db534da1be04149c1c49edb008979b95db4970";
 let vaultProxyAddress = "0x8e825311482e79454ca24ae24570ecd7d0a4282f";
 
 let signer = new ethers.Wallet(USER_PRIVATE_KEY, provider);
-let aaveAddress = "0xFD6F7A6a5c21A3f503EBaE7a473639974379c351";
-let enjAddress = "0xefAB0Beb0A557E452b398035eA964948c750b2Fd";
-let daiAddress = "0x6C2d83262fF84cBaDb3e416D527403135D757892";
+let aaveAddress = "0xa6e99A4ED7498b3cdDCBB61a6A607a4925Faa1B7";
+let enjAddress = "0xaca81583840B1bf2dDF6CDe824ada250C1936B4D";
+let daiAddress = "0xFD6F7A6a5c21A3f503EBaE7a473639974379c351";
 
 const registerEnzymeContractsWithAave = async (
   signer:ethers.Wallet) => {

@@ -23,6 +23,7 @@ import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 interface IVaultInterface extends ethers.utils.Interface {
   functions: {
     "addTrackedAsset(address)": FunctionFragment;
+    "burn(address,address,uint256,address)": FunctionFragment;
     "burnShares(address,uint256)": FunctionFragment;
     "buyBackProtocolFeeShares(uint256,uint256,uint256)": FunctionFragment;
     "callOnContract(address,bytes)": FunctionFragment;
@@ -34,6 +35,7 @@ interface IVaultInterface extends ethers.utils.Interface {
     "getExternalPositionLibForType(uint256)": FunctionFragment;
     "getOwner()": FunctionFragment;
     "getTrackedAssets()": FunctionFragment;
+    "handleRepayment(address,uint256)": FunctionFragment;
     "init(address,address,string)": FunctionFragment;
     "isActiveExternalPosition(address)": FunctionFragment;
     "isTrackedAsset(address)": FunctionFragment;
@@ -53,6 +55,10 @@ interface IVaultInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "addTrackedAsset",
     values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "burn",
+    values: [string, string, BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "burnShares",
@@ -91,6 +97,10 @@ interface IVaultInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "getTrackedAssets",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "handleRepayment",
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "init",
@@ -147,6 +157,7 @@ interface IVaultInterface extends ethers.utils.Interface {
     functionFragment: "addTrackedAsset",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "burnShares", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "buyBackProtocolFeeShares",
@@ -180,6 +191,10 @@ interface IVaultInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "getOwner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getTrackedAssets",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "handleRepayment",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "init", data: BytesLike): Result;
@@ -257,6 +272,22 @@ export class IVault extends Contract {
 
     "addTrackedAsset(address)"(
       arg0: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    burn(
+      user: string,
+      receiverOfUnderlying: string,
+      amount: BigNumberish,
+      underlyingAssetAddress: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "burn(address,address,uint256,address)"(
+      user: string,
+      receiverOfUnderlying: string,
+      amount: BigNumberish,
+      underlyingAssetAddress: string,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
@@ -387,6 +418,18 @@ export class IVault extends Contract {
     "getTrackedAssets()"(overrides?: CallOverrides): Promise<{
       0: string[];
     }>;
+
+    handleRepayment(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "handleRepayment(address,uint256)"(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
 
     init(
       _owner: string,
@@ -565,6 +608,22 @@ export class IVault extends Contract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
+  burn(
+    user: string,
+    receiverOfUnderlying: string,
+    amount: BigNumberish,
+    underlyingAssetAddress: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "burn(address,address,uint256,address)"(
+    user: string,
+    receiverOfUnderlying: string,
+    amount: BigNumberish,
+    underlyingAssetAddress: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
   burnShares(
     arg0: string,
     arg1: BigNumberish,
@@ -649,6 +708,18 @@ export class IVault extends Contract {
   getTrackedAssets(overrides?: CallOverrides): Promise<string[]>;
 
   "getTrackedAssets()"(overrides?: CallOverrides): Promise<string[]>;
+
+  handleRepayment(
+    arg0: string,
+    arg1: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "handleRepayment(address,uint256)"(
+    arg0: string,
+    arg1: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
 
   init(
     _owner: string,
@@ -807,6 +878,22 @@ export class IVault extends Contract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    burn(
+      user: string,
+      receiverOfUnderlying: string,
+      amount: BigNumberish,
+      underlyingAssetAddress: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "burn(address,address,uint256,address)"(
+      user: string,
+      receiverOfUnderlying: string,
+      amount: BigNumberish,
+      underlyingAssetAddress: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     burnShares(
       arg0: string,
       arg1: BigNumberish,
@@ -893,6 +980,18 @@ export class IVault extends Contract {
     getTrackedAssets(overrides?: CallOverrides): Promise<string[]>;
 
     "getTrackedAssets()"(overrides?: CallOverrides): Promise<string[]>;
+
+    handleRepayment(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "handleRepayment(address,uint256)"(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     init(
       _owner: string,
@@ -1056,6 +1155,22 @@ export class IVault extends Contract {
       overrides?: Overrides
     ): Promise<BigNumber>;
 
+    burn(
+      user: string,
+      receiverOfUnderlying: string,
+      amount: BigNumberish,
+      underlyingAssetAddress: string,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "burn(address,address,uint256,address)"(
+      user: string,
+      receiverOfUnderlying: string,
+      amount: BigNumberish,
+      underlyingAssetAddress: string,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
     burnShares(
       arg0: string,
       arg1: BigNumberish,
@@ -1145,6 +1260,18 @@ export class IVault extends Contract {
     getTrackedAssets(overrides?: CallOverrides): Promise<BigNumber>;
 
     "getTrackedAssets()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    handleRepayment(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "handleRepayment(address,uint256)"(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
 
     init(
       _owner: string,
@@ -1309,6 +1436,22 @@ export class IVault extends Contract {
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
+    burn(
+      user: string,
+      receiverOfUnderlying: string,
+      amount: BigNumberish,
+      underlyingAssetAddress: string,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "burn(address,address,uint256,address)"(
+      user: string,
+      receiverOfUnderlying: string,
+      amount: BigNumberish,
+      underlyingAssetAddress: string,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
     burnShares(
       arg0: string,
       arg1: BigNumberish,
@@ -1407,6 +1550,18 @@ export class IVault extends Contract {
 
     "getTrackedAssets()"(
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    handleRepayment(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "handleRepayment(address,uint256)"(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     init(

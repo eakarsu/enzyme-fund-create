@@ -1,7 +1,7 @@
 
-let lendingPoolAddress = "0x4a72B75D148f5B74fad30DE360b3D955d10B54b2";
-let daiAddress = "0x6C2d83262fF84cBaDb3e416D527403135D757892";
-let aaveAddress = "0xFD6F7A6a5c21A3f503EBaE7a473639974379c351";
+let lendingPoolAddress = "0x32AEb645166a380789F448E7928C22a586D50290";
+let daiAddress = "0xFD6F7A6a5c21A3f503EBaE7a473639974379c351";
+let aaveAddress = "0xa6e99A4ED7498b3cdDCBB61a6A607a4925Faa1B7";
 let MintableERC20Factory = require("./types").MintableERC20Factory
 
 let signers = await hre.ethers.getSigners()
@@ -18,9 +18,9 @@ await aave.connect(user0).approve(lendingPool.address,'1000000000000000000000000
 await lendingPool.connect(user0).deposit(aave.address, '10000000000000',user0.address,'0',{})
 
 ///second operation
-let lendingPoolAddress = "0x4a72B75D148f5B74fad30DE360b3D955d10B54b2";
-let daiAddress = "0x6C2d83262fF84cBaDb3e416D527403135D757892";
-let aaveAddress = "0xFD6F7A6a5c21A3f503EBaE7a473639974379c351";
+let lendingPoolAddress = "0x32AEb645166a380789F448E7928C22a586D50290";
+let daiAddress = "0xFD6F7A6a5c21A3f503EBaE7a473639974379c351";
+let aaveAddress = "0xa6e99A4ED7498b3cdDCBB61a6A607a4925Faa1B7";
 let MintableERC20Factory = require("./types").MintableERC20Factory
 
 let signers = await hre.ethers.getSigners()
@@ -37,3 +37,7 @@ await dai.connect(user2).approve(lendingPool.address,'10000000000000000000000000
 await lendingPool.connect(user2).deposit(dai.address, '1000000000000000000',user2.address,'0',{})
 
 await lendingPool.connect(user0).borrow(daiAddress, '10000',1,'0',user0.address,{})
+
+await lendingPool.connect(user0).withdraw(aaveAddress, '1000',user0.address)
+
+await lendingPool.connect(user0).repay(daiAddress, '100',1,user0.address)
