@@ -36,11 +36,12 @@ mainnet='/home/eakarsu/Research/enzyme/protocol/deploy/scripts/config/Mainnet.ts
 plugData LendingPoolAddressesProvider lendingPoolAddressProvider $consoleOut $mainnet
 plugData AaveProtocolDataProvider protocolDataProvider $consoleOut $mainnet
 
-for token in dai aave tusd bat weth usdc usdt susd zrx mkr wbtc link knc mana ren snx busd yfi uni enj; do
+#Skip snx, knc, weth,usdc and susd because enzyme is not able to deploy syntetix coins
+for token in dai aave tusd bat usdt zrx mkr wbtc link mana ren  busd yfi uni enj; do
   upToken=$(echo $token | tr 'a-z' 'A-Z')
   plugData $upToken $token $consoleOut $mainnet
   plugDataToken a"$upToken" a"$token" $consoleOut $mainnet
 done
 
-plugIndividualToken weth WETH $consoleOut $mainnet
-plugIndividualToken mln MLN $consoleOut $mainnet
+#plugIndividualToken weth WETH $consoleOut $mainnet
+#plugIndividualToken mln MLN $consoleOut $mainnet
