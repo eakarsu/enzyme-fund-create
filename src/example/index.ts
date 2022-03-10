@@ -1,20 +1,32 @@
 import { listAllFunds } from "./../index";
 
 import { createSomeNewFund } from "./create-fund";
-import { ethers, utils } from "ethers";
-import { StandardToken } from "@enzymefinance/protocol";
+import { BigNumber, constants,ethers, utils } from "ethers";
 import {getMintableToken} from "../funds/create-fund";
-import {EnzymeBridgeFactory, MintableERC20Factory} from "../aave/types";
+import {EnzymeBridgeFactory, MintableERC20, MintableERC20Factory, MockAToken} from "../aave/types";
 import {addNewAssetsToFundCustom,
   addAssetsToFundExtend,
   moveAssetsToAnotherFund,
 addTrackedOneAssetToVault} from "../utils/assets"
-import {ComptrollerLib} from '@enzymefinance/protocol';
 import { getFundValue } from "../utils/vaultValue";
-import { constants } from "http2";
+
 import { LendingPoolConfiguratorFactory,LendingPoolAddressesProviderFactory,
   EnzymeLendingPoolManagerFactory } from "../aave/types";
 import { LendingPoolConfigurator,LendingPoolConfiguratorInterface } from "../aave/types/LendingPoolConfigurator";
+
+import {AddressLike, randomAddress} from '@enzymefinance/ethers';
+import {
+    ComptrollerLib, FundDeployer, IntegrationManager,
+    IYearnVaultV2,
+    lendSelector, MockToken,
+    redeemSelector,
+    SpendAssetsHandleType,
+    StandardToken, VaultLib, YearnVaultV2Adapter,
+    yearnVaultV2LendArgs,
+    yearnVaultV2RedeemArgs,
+} from '@enzymefinance/protocol';
+
+import {yearnVaultV2Lend} from '../yearn/yearn';
 
 const web3 = require("web3");
 
@@ -27,33 +39,37 @@ const denominationAsset = "0x99dBE4AEa58E518C50a1c04aE9b48C9F6354612f";
 const userAddress = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266";
 const USER_PRIVATE_KEY = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
 
+//const userAddress = "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc";
+//const USER_PRIVATE_KEY = "0x5de4111afa1a4b94908f83103eb1f1706367c2e68ca870fc3fb9a804cdab365a";
+
 //user2
 /*
 const userAddress = "0x70997970c51812dc3a010c7d01b50e0d17dc79c8";
 const USER_PRIVATE_KEY = "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d"; 
 */
-let integrationManagerAddress = "0x25C0a2F0A077F537Bd11897F04946794c2f6f1Ef";
-let fundValueCalculatorAddress = "0x22b1c5C2C9251622f7eFb76E356104E5aF0e996A";
-let fundDeployerAddress = "0xB9d9e972100a1dD01cd441774b45b5821e136043";
-let fundValueCalculatorRouterAddress = "0x5322471a7E37Ac2B8902cFcba84d266b37D811A0";
-let valueInterpreterAddress = "0xB7ca895F81F20e05A5eb11B05Cbaab3DAe5e23cd";
-let managementFeeAddress = "0xA9d0Fb5837f9c42c874e16da96094b14Af0e2784";
-let entranceRateDirectFeeAddress = "0xd977422c9eE9B646f64A4C4389a6C98ad356d8C4";
-let performanceFeeAddress = "0x6B21b3ae41f818Fc91e322b53f8D0773d31eCB75";
-let lendingPoolAddressesProviderAddress = "0xaC47e91215fb80462139756f43438402998E4A3a";
-let aaveProtocolDataProviderAddress = "0xA21DDc1f17dF41589BC6A5209292AED2dF61Cc94";
-let enzymeBridgeAddress = "0x3C15538ED063e688c8DF3d571Cb7a0062d2fB18D";
-let vaultLibAddress = "0x52173b6ac069619c206b9A0e75609fC92860AB2A";
-let comptrollerLibAddress = "0xeC1BB74f5799811c0c1Bff94Ef76Fb40abccbE4a";
+let integrationManagerAddress = "0xd038A2EE73b64F30d65802Ad188F27921656f28F";
+let fundValueCalculatorAddress = "0x696358bBb1a743052E0E87BeD78AAd9d18f0e1F4";
+let fundDeployerAddress = "0x2538a10b7fFb1B78c890c870FC152b10be121f04";
+let fundValueCalculatorRouterAddress = "0x3D63c50AD04DD5aE394CAB562b7691DD5de7CF6f";
+let valueInterpreterAddress = "0x2d13826359803522cCe7a4Cfa2c1b582303DD0B4";
+let managementFeeAddress = "0x1f53E116c31F171e59f45f0752AEc5d1F5aA3714";
+let entranceRateDirectFeeAddress = "0x6e0a5725dD4071e46356bD974E13F35DbF9ef367";
+let performanceFeeAddress = "0xa31F4c0eF2935Af25370D9AE275169CCd9793DA3";
+let lendingPoolAddressesProviderAddress = "0x63fea6E447F120B8Faf85B53cdaD8348e645D80E";
+let aaveProtocolDataProviderAddress = "0x158d291D8b47F056751cfF47d1eEcd19FDF9B6f8";
+let enzymeBridgeAddress = "0x3904b8f5b0F49cD206b7d5AABeE5D1F37eE15D8d";
+let vaultLibAddress = "0x532802f2F9E0e3EE9d5Ba70C35E1F43C0498772D";
+let comptrollerLibAddress = "0x09120eAED8e4cD86D85a616680151DAA653880F2";
+let yearnVaultV2AdapterAddress = "0xD2D5e508C82EFc205cAFA4Ad969a4395Babce026";
 
 //Set this manually if required
-let comptrollerProxyAddress = "0xb2db534da1be04149c1c49edb008979b95db4970";
-let vaultProxyAddress = "0x8e825311482e79454ca24ae24570ecd7d0a4282f";
+let comptrollerProxyAddress = "0x3482173066f5a4f3326a116bbc8b621737bc4a24";
+let vaultProxyAddress = "0xbb322c198a0dea7cb5d1c0a4665098c83825710d";
 
 let signer = new ethers.Wallet(USER_PRIVATE_KEY, provider);
-let aaveAddress = "0xa6e99A4ED7498b3cdDCBB61a6A607a4925Faa1B7";
-let enjAddress = "0xaca81583840B1bf2dDF6CDe824ada250C1936B4D";
-let daiAddress = "0xFD6F7A6a5c21A3f503EBaE7a473639974379c351";
+let aaveAddress = "0x0ed64d01D0B4B655E410EF1441dD677B695639E7";
+let enjAddress = "0x26B862f640357268Bd2d9E95bc81553a2Aa81D7E";
+let daiAddress = "0x5302E909d1e93e30F05B5D6Eea766363D14F9892";
 
 const registerEnzymeContractsWithAave = async (
   signer:ethers.Wallet) => {
@@ -87,7 +103,8 @@ const registerEnzymeContractsWithAave = async (
       signer.address);
 }
 
-const createFundWork = async (signer:ethers.Wallet,provider:ethers.providers.JsonRpcProvider) => {
+const createFundWork = async (denominationAsset:string,
+                              signer:ethers.Wallet,provider:ethers.providers.JsonRpcProvider) => {
   
   const triple = await createSomeNewFund(signer,provider,userAddress,denominationAsset);
   provider.waitForTransaction(triple.receipt.transactionHash);
@@ -95,6 +112,7 @@ const createFundWork = async (signer:ethers.Wallet,provider:ethers.providers.Jso
   console.log ("Comptroller proxy adress:"+comptrollerProxy.address);
   const nonce = await provider.getTransactionCount(signer.address, "pending");
   console.log ("User nonce:"+nonce);
+  return triple;
 }
 
 const createAssetsToFund = async (signer:ethers.Wallet,
@@ -132,6 +150,85 @@ const getVaultValueAction =async ( signer:ethers.Wallet,
     aaveAddress);
 }
 
+const lendPrimitive = async (signer:ethers.Wallet,) => {
+    const yearnVaultV2Adapter = new YearnVaultV2Adapter(yearnVaultV2AdapterAddress, signer);
+
+    const yVault = new IYearnVaultV2("0x19D3364A399d251E894aC732651be8B0E4e85001", provider);
+    const outgoingUnderlyingAmount = utils.parseEther('2');
+    const minIncomingYVaultSharesAmount = utils.parseEther('3');
+
+    const result = await yearnVaultV2Adapter.parseAssetsForAction(
+        randomAddress(),
+        lendSelector,
+        yearnVaultV2LendArgs({
+            minIncomingYVaultSharesAmount,
+            outgoingUnderlyingAmount,
+            yVault,
+        }),
+    );
+    console.log(result);
+}
+const lend = async (provider:ethers.providers.JsonRpcProvider,signer:ethers.Wallet,) => {
+    const yearnVaultV2Adapter = new YearnVaultV2Adapter(yearnVaultV2AdapterAddress, signer);
+    //dai token
+    let dai = MintableERC20Factory.connect(daiAddress,signer);
+    await dai.symbol()
+    await dai.connect(signer).mint('10000000000000000000000000');
+    let bal = await dai.balanceOf(signer.address)
+    console.log ("Dai balance:"+bal.toString());
+
+    const yVault = await MintableERC20Factory.connect("0x19D3364A399d251E894aC732651be8B0E4e85001", signer);
+    const outgoingToken = dai;
+    const assetUnit = await getAssetUnit(yVault);
+    const integrationManager = new IntegrationManager(integrationManagerAddress, signer);
+
+    const comptrollerProxy = new ComptrollerLib(comptrollerProxyAddress, signer);
+    const vaultProxy = new VaultLib(vaultProxyAddress, signer);
+    //const { comptrollerProxy,receipt, vaultProxy } = await createFundWork(daiAddress,signer,provider);
+    //console.log (receipt);
+
+    await dai.connect(signer).approve(vaultProxy.address,'100000000000000000000000000000000000000000');
+
+    // Seed the fund with more than the necessary amount of outgoing asset
+    const outgoingUnderlyingAmount = BigNumber.from(100000000000); //assetUnit;
+    //await outgoingToken.transfer(vaultProxy.address, outgoingUnderlyingAmount.mul(3));
+    await outgoingToken.connect(signer).transfer(vaultProxy.address,"1000000"); //outgoingUnderlyingAmount.mul(3));
+    let bal2 = await outgoingToken.balanceOf(vaultProxy.address)
+    console.log ("vault balance:"+bal2.toString());
+
+    // Since we can't easily test that an unused underlying amount from a deposit is returned
+    /// to the vaultProxy, we seed the adapter with a small amount of the underlying, which will
+    /// be returned to the vaultProxy upon running lend()
+    const preTxAdapterUnderlyingBalance = assetUnit;
+    await outgoingToken.transfer(yearnVaultV2Adapter.address, "1000000000"); //preTxAdapterUnderlyingBalance);
+
+    const [preTxYVaultBalance, preTxUnderlyingBalance] = await getAssetBalances(provider, vaultProxy,
+       [yVault, outgoingToken]);
+    console.log ("preTxYVaultBalance:"+preTxYVaultBalance);
+    console.log ("preTxUnderlyingBalance:"+preTxUnderlyingBalance);
+
+    const lendReceipt = await yearnVaultV2Lend({
+        comptrollerProxy,
+        integrationManager: integrationManager,
+        outgoingUnderlyingAmount,
+        signer: signer,
+        yVault,
+        yearnVaultV2Adapter,
+    });
+
+    const [postTxYVaultBalance, postTxUnderlyingBalance] = await getAssetBalances(provider, vaultProxy,
+        [yVault, outgoingToken]);
+}
+
+async function getAssetBalances(provider:ethers.providers.JsonRpcProvider,
+                                account: AddressLike, assets: AddressLike[] ) {
+    return Promise.all(assets.map((asset) => new StandardToken(asset, provider).balanceOf(account)));
+}
+
+async function getAssetUnit(asset: MintableERC20) {
+    return utils.parseUnits('1', await asset.decimals());
+}
+
 /**
  * This is very crytical function. If we can deposit token from aave to enzyme fund,
  * then we are half way done. Later on, if I can borrow from enzyme fund, then I think
@@ -148,8 +245,9 @@ const getVaultValueAction =async ( signer:ethers.Wallet,
   console.log ("after setReserveFactor");
 }*/
 
-registerEnzymeContractsWithAave(signer);
-//createFundWork(signer,provider);
+//registerEnzymeContractsWithAave(signer);
+//createFundWork(daiAddress,signer,provider);
+lend(provider,signer);
 
 //createAssetsToFund (signer,provider,comptrollerProxyAddress,aaveAddress, 10000000000);
 

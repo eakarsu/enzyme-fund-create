@@ -7,6 +7,15 @@
   "files": [
     "build/**/*"
   ],
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "preconstruct": {
+    "packages": [
+      "packages/*"
+    ]
+  },
   "scripts": {
     "clean": "del ./build/*",
     "build": "npm run clean && tsc ",
@@ -21,8 +30,7 @@
     "@enzymefinance/ethers": "^1.0.10",
     "@enzymefinance/hardhat": "^1.0.11",
     "@enzymefinance/prettier-config": "^1.0.6",
-    "@enzymefinance/protocol": "4.0.0-next.4",
-    "@enzymefinance/testutils": "4.0.0-next.3",
+    "@preconstruct/cli": "^2.1.5",
     "@ethersproject/experimental": "5.5.0",
     "@nomiclabs/buidler": "^1.4.7",
     "@nomiclabs/buidler-ethers": "2.0.0",

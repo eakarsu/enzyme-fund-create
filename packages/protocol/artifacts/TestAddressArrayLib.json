@@ -1,0 +1,26 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "_array",
+        "type": "address[]"
+      },
+      {
+        "internalType": "address[]",
+        "name": "_arrayToMerge",
+        "type": "address[]"
+      }
+    ],
+    "name": "mergeArray",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "nextArray_",
+        "type": "address[]"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  }
+]

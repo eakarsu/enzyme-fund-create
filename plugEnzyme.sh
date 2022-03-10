@@ -19,7 +19,7 @@ function plugData() {
   value=$2
   fileName=$3
   echo "Received $word $value $fileName"
-  sed -i "s/let $word.*;/let $word = \"$value\";/" $fileName
+  sed -i "s/let $word.*;/let $word = \"$value\";/g" $fileName
 }
 
 enzymeConsoleOut="enzyme.out"
@@ -39,6 +39,7 @@ entranceRateDirectFeeAddress=$(pullData EntranceRateDirectFee $enzymeConsoleOut)
 performanceFeeAddress=$(pullData PerformanceFee $enzymeConsoleOut)
 vaultLibAddress=$(pullData VaultLib $enzymeConsoleOut)
 comptrollerLibAddress=$(pullData ComptrollerLib $enzymeConsoleOut);
+yearnVaultV2AdapterAddress=$(pullData YearnVaultV2Adapter $enzymeConsoleOut);
 
 enzymeBridgeAddress=$(plugAaveData EnzymeBridge $aaveConsoleOut)
 lendingPoolAddressesProviderAddress=$(plugAaveData LendingPoolAddressesProvider $aaveConsoleOut)
@@ -59,6 +60,7 @@ plugData entranceRateDirectFeeAddress $entranceRateDirectFeeAddress $outFile
 plugData performanceFeeAddress $performanceFeeAddress $outFile
 plugData vaultLibAddress $vaultLibAddress $outFile
 plugData comptrollerLibAddress $comptrollerLibAddress $outFile
+plugData yearnVaultV2AdapterAddress  $yearnVaultV2AdapterAddress $outFile
 
 plugData lendingPoolAddressesProviderAddress $lendingPoolAddressesProviderAddress $outFile
 plugData aaveProtocolDataProviderAddress $aaveProtocolDataProviderAddress $outFile
@@ -71,7 +73,9 @@ plugData enjAddress  $enjAddress $outFile
 plugData aaveAddress $aaveAddress $runFile
 plugData daiAddress  $daiAddress $runFile
 plugData lendingPoolAddress  $lendingPoolAddress $runFile
+plugData yearnVaultV2AdapterAddress  $yearnVaultV2AdapterAddress $runFile
 
 plugData aaveAddress $aaveAddress $runFile2
 plugData daiAddress  $daiAddress $runFile2
 plugData lendingPoolAddress  $lendingPoolAddress $runFile2
+plugData yearnVaultV2AdapterAddress  $yearnVaultV2AdapterAddress $runFile2

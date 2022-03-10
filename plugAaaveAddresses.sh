@@ -7,7 +7,7 @@ function plugData() {
    outFileName=$4
    address=`egrep -e "^$word1: " $fileName | sed "s/$word1: //"|tail -1`
    #echo "Word1:${word1} Word2:${word2} address:${address} fileName:${fileName} outFileName:${outFileName}"
-   sed  -i "s/  $word2: '.*',/  $word2: '$address',/" $outFileName
+   sed  -i "s/  $word2: '.*',/  $word2: '$address',/g" $outFileName
    echo "Word1:${word1} Word2:${word2} address:${address}"
  }
 function plugDataToken() {
@@ -16,7 +16,7 @@ function plugDataToken() {
   fileName=$3
   outFileName=$4
   address=`egrep -e "^$word1:" $fileName | sed "s/$word1://"|tail -1`
-  sed  -i "s/  $word2: \['.*',/  $word2: \['$address',/" $outFileName
+  sed  -i "s/  $word2: \['.*',/  $word2: \['$address',/g" $outFileName
   echo "Word1:${word1} Word2:${word2} address:${address}"
 }
 function plugIndividualToken() {
@@ -25,7 +25,7 @@ function plugIndividualToken() {
    fileName=$3
    outFileName=$4
    address=`egrep -e "^$word1: " $fileName | sed "s/$word1: //"|tail -1`
-   sed  -i "s/const $word2 = '.*';/  $word2: '$address';/" $outFileName
+   sed  -i "s/const $word2 = '.*';/  $word2: '$address';/g" $outFileName
    echo "Word1:${word1} Word2:${word2} address:${address}"
  }
 
@@ -36,6 +36,7 @@ mainnet='/home/eakarsu/Research/enzyme/protocol/deploy/scripts/config/Mainnet.ts
 plugData LendingPoolAddressesProvider lendingPoolAddressProvider $consoleOut $mainnet
 plugData AaveProtocolDataProvider protocolDataProvider $consoleOut $mainnet
 
+
 #Skip snx, knc, weth,usdc and susd because enzyme is not able to deploy syntetix coins
 for token in dai aave tusd bat usdt zrx mkr wbtc link mana ren  busd yfi uni enj; do
   upToken=$(echo $token | tr 'a-z' 'A-Z')
@@ -43,5 +44,5 @@ for token in dai aave tusd bat usdt zrx mkr wbtc link mana ren  busd yfi uni enj
   plugDataToken a"$upToken" a"$token" $consoleOut $mainnet
 done
 
-#plugIndividualToken weth WETH $consoleOut $mainnet
-#plugIndividualToken mln MLN $consoleOut $mainnet
+plugIndividualToken weth WETH $consoleOut $mainnet
+plugIndividualToken mln MLN $consoleOut $mainnet
