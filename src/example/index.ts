@@ -47,29 +47,29 @@ const USER_PRIVATE_KEY = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae78
 const userAddress = "0x70997970c51812dc3a010c7d01b50e0d17dc79c8";
 const USER_PRIVATE_KEY = "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d"; 
 */
-let integrationManagerAddress = "0xd038A2EE73b64F30d65802Ad188F27921656f28F";
-let fundValueCalculatorAddress = "0x696358bBb1a743052E0E87BeD78AAd9d18f0e1F4";
-let fundDeployerAddress = "0x2538a10b7fFb1B78c890c870FC152b10be121f04";
-let fundValueCalculatorRouterAddress = "0x3D63c50AD04DD5aE394CAB562b7691DD5de7CF6f";
-let valueInterpreterAddress = "0x2d13826359803522cCe7a4Cfa2c1b582303DD0B4";
-let managementFeeAddress = "0x1f53E116c31F171e59f45f0752AEc5d1F5aA3714";
-let entranceRateDirectFeeAddress = "0x6e0a5725dD4071e46356bD974E13F35DbF9ef367";
-let performanceFeeAddress = "0xa31F4c0eF2935Af25370D9AE275169CCd9793DA3";
-let lendingPoolAddressesProviderAddress = "0x63fea6E447F120B8Faf85B53cdaD8348e645D80E";
-let aaveProtocolDataProviderAddress = "0x158d291D8b47F056751cfF47d1eEcd19FDF9B6f8";
-let enzymeBridgeAddress = "0x3904b8f5b0F49cD206b7d5AABeE5D1F37eE15D8d";
-let vaultLibAddress = "0x532802f2F9E0e3EE9d5Ba70C35E1F43C0498772D";
-let comptrollerLibAddress = "0x09120eAED8e4cD86D85a616680151DAA653880F2";
-let yearnVaultV2AdapterAddress = "0xD2D5e508C82EFc205cAFA4Ad969a4395Babce026";
+let integrationManagerAddress = "0xd9fEc8238711935D6c8d79Bef2B9546ef23FC046";
+let fundValueCalculatorAddress = "0x8E45C0936fa1a65bDaD3222bEFeC6a03C83372cE";
+let fundDeployerAddress = "0x976C214741b4657bd99DFD38a5c0E3ac5C99D903";
+let fundValueCalculatorRouterAddress = "0x9385556B571ab92bf6dC9a0DbD75429Dd4d56F91";
+let valueInterpreterAddress = "0xAe120F0df055428E45b264E7794A18c54a2a3fAF";
+let managementFeeAddress = "0x158d291D8b47F056751cfF47d1eEcd19FDF9B6f8";
+let entranceRateDirectFeeAddress = "0x0c626FC4A447b01554518550e30600136864640B";
+let performanceFeeAddress = "0x2F54D1563963fC04770E85AF819c89Dc807f6a06";
+let lendingPoolAddressesProviderAddress = "0x4bf010f1b9beDA5450a8dD702ED602A104ff65EE";
+let aaveProtocolDataProviderAddress = "0x71089Ba41e478702e1904692385Be3972B2cBf9e";
+let enzymeBridgeAddress = "0x74Cf9087AD26D541930BaC724B7ab21bA8F00a27";
+let vaultLibAddress = "0x9338CA7d556248055f5751d85cDA7aD6eF254433";
+let comptrollerLibAddress = "0xCBBe2A5c3A22BE749D5DDF24e9534f98951983e2";
+let yearnVaultV2AdapterAddress = "0xB22C255250d74B0ADD1bfB936676D2a299BF48Bd";
 
 //Set this manually if required
-let comptrollerProxyAddress = "0x3482173066f5a4f3326a116bbc8b621737bc4a24";
-let vaultProxyAddress = "0xbb322c198a0dea7cb5d1c0a4665098c83825710d";
+let comptrollerProxyAddress = "0x8fee1caaccb93f019b48d4405d7429ca3a1d7145";
+let vaultProxyAddress = "0xcf25c70d942a2db6a6d11a897be47d3d9153ab58";
 
 let signer = new ethers.Wallet(USER_PRIVATE_KEY, provider);
-let aaveAddress = "0x0ed64d01D0B4B655E410EF1441dD677B695639E7";
-let enjAddress = "0x26B862f640357268Bd2d9E95bc81553a2Aa81D7E";
-let daiAddress = "0x5302E909d1e93e30F05B5D6Eea766363D14F9892";
+let aaveAddress = "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9";
+let enjAddress = "0xF629cBd94d3791C9250152BD8dfBDF380E2a3B9c";
+let daiAddress = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
 
 const registerEnzymeContractsWithAave = async (
   signer:ethers.Wallet) => {
@@ -173,7 +173,7 @@ const lend = async (provider:ethers.providers.JsonRpcProvider,signer:ethers.Wall
     //dai token
     let dai = MintableERC20Factory.connect(daiAddress,signer);
     await dai.symbol()
-    await dai.connect(signer).mint('10000000000000000000000000');
+    //await dai.connect(signer).mint('10000000000000000000000000');
     let bal = await dai.balanceOf(signer.address)
     console.log ("Dai balance:"+bal.toString());
 
@@ -190,9 +190,11 @@ const lend = async (provider:ethers.providers.JsonRpcProvider,signer:ethers.Wall
     await dai.connect(signer).approve(vaultProxy.address,'100000000000000000000000000000000000000000');
 
     // Seed the fund with more than the necessary amount of outgoing asset
-    const outgoingUnderlyingAmount = BigNumber.from(100000000000); //assetUnit;
+    const outgoingUnderlyingAmount = assetUnit;
+    console.log (outgoingUnderlyingAmount.toString());
+
     //await outgoingToken.transfer(vaultProxy.address, outgoingUnderlyingAmount.mul(3));
-    await outgoingToken.connect(signer).transfer(vaultProxy.address,"1000000"); //outgoingUnderlyingAmount.mul(3));
+    await outgoingToken.connect(signer).transfer(vaultProxy.address,"1000000000000000"); //outgoingUnderlyingAmount.mul(3));
     let bal2 = await outgoingToken.balanceOf(vaultProxy.address)
     console.log ("vault balance:"+bal2.toString());
 
@@ -200,7 +202,7 @@ const lend = async (provider:ethers.providers.JsonRpcProvider,signer:ethers.Wall
     /// to the vaultProxy, we seed the adapter with a small amount of the underlying, which will
     /// be returned to the vaultProxy upon running lend()
     const preTxAdapterUnderlyingBalance = assetUnit;
-    await outgoingToken.transfer(yearnVaultV2Adapter.address, "1000000000"); //preTxAdapterUnderlyingBalance);
+    await outgoingToken.transfer(yearnVaultV2Adapter.address, "10010990"); //preTxAdapterUnderlyingBalance);
 
     const [preTxYVaultBalance, preTxUnderlyingBalance] = await getAssetBalances(provider, vaultProxy,
        [yVault, outgoingToken]);
@@ -226,7 +228,7 @@ async function getAssetBalances(provider:ethers.providers.JsonRpcProvider,
 }
 
 async function getAssetUnit(asset: MintableERC20) {
-    return utils.parseUnits('1', await asset.decimals());
+    return utils.parseUnits('0.001', await asset.decimals());
 }
 
 /**

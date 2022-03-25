@@ -1,7 +1,7 @@
 
-let lendingPoolAddress = "0x0Ccf6a85510fc2ECD2DB37EF2C886c787D6C4A1d";
-let daiAddress = "0x5302E909d1e93e30F05B5D6Eea766363D14F9892";
-let aaveAddress = "0x0ed64d01D0B4B655E410EF1441dD677B695639E7";
+let lendingPoolAddress = "0x4E0C596bE5FE217cB80AeB4C47C72701DFF0F6BC";
+let daiAddress = "0x0ed64d01D0B4B655E410EF1441dD677B695639E7";
+let aaveAddress = "0x4bf010f1b9beDA5450a8dD702ED602A104ff65EE";
 let MintableERC20Factory = require("./types").MintableERC20Factory
 
 let signers = await hre.ethers.getSigners()
