@@ -17,7 +17,7 @@ await provider.send("hardhat_impersonateAccount", [yearnVaultGovernanceAddress])
 yearnVaultGovernance = provider.getSigner(yearnVaultGovernanceAddress);
 
 //Unlock yearn vault
-lendingPoolAddress = "0x4E0C596bE5FE217cB80AeB4C47C72701DFF0F6BC";
+lendingPoolAddress = "0xB985013a46be514dA67d2c33F5F88994Ea6a296c";
 daiAddress = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
 aaveAddress = "0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9";
 daiEtherMainnetUser="0xE78388b4CE79068e89Bf8aA7f218eF6b9AB0e9d0"

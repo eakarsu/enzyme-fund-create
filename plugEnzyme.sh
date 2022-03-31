@@ -72,10 +72,10 @@ plugData enzymeBridgeAddress $enzymeBridgeAddress $outFile
 
 #plugData aaveAddress $aaveAddress $runFile
 #plugData daiAddress  $daiAddress $runFile
-#plugData lendingPoolAddress  $lendingPoolAddress $runFile
-#plugData yearnVaultV2AdapterAddress  $yearnVaultV2AdapterAddress $runFile
+plugData lendingPoolAddress  $lendingPoolAddress $runFile
+plugData yearnVaultV2AdapterAddress  $yearnVaultV2AdapterAddress $runFile
 
 #plugData aaveAddress $aaveAddress $runFile2
 #plugData daiAddress  $daiAddress $runFile2
-#plugData lendingPoolAddress  $lendingPoolAddress $runFile2
-#plugData yearnVaultV2AdapterAddress  $yearnVaultV2AdapterAddress $runFile2
+plugData lendingPoolAddress  $lendingPoolAddress $runFile2
+plugData yearnVaultV2AdapterAddress  $yearnVaultV2AdapterAddress $runFile2
