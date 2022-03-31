@@ -247,9 +247,9 @@ async function getAssetUnit(asset: MintableERC20) {
   console.log ("after setReserveFactor");
 }*/
 
-//registerEnzymeContractsWithAave(signer);
+registerEnzymeContractsWithAave(signer);
 //createFundWork(daiAddress,signer,provider);
-lend(provider,signer);
+//lend(provider,signer);
 
 //createAssetsToFund (signer,provider,comptrollerProxyAddress,aaveAddress, 10000000000);
 
