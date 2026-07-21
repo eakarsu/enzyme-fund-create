@@ -1,0 +1,17 @@
+# Historical findings are acknowledged in SECURITY_INCIDENT.md. Exact fingerprints
+# keep CI sensitive to every new finding without pretending the old history is clean.
+0c3320934d9fd40f9675b70f1e3ce97ba4072585:.env:generic-api-key:5
+0c3320934d9fd40f9675b70f1e3ce97ba4072585:test-wallets.js:generic-api-key:6
+0c3320934d9fd40f9675b70f1e3ce97ba4072585:test-wallets.js:generic-api-key:10
+0c3320934d9fd40f9675b70f1e3ce97ba4072585:test-wallets.js:generic-api-key:14
+0c3320934d9fd40f9675b70f1e3ce97ba4072585:test-wallets.js:generic-api-key:18
+0c3320934d9fd40f9675b70f1e3ce97ba4072585:test-wallets.js:generic-api-key:22
+0c3320934d9fd40f9675b70f1e3ce97ba4072585:test-wallets.js:generic-api-key:26
+0c3320934d9fd40f9675b70f1e3ce97ba4072585:test-wallets.js:generic-api-key:30
+0c3320934d9fd40f9675b70f1e3ce97ba4072585:test-wallets.js:generic-api-key:34
+1e8d0ed84cc4a2d05b7c8a25083bb63a2e3df9f2:build/example/create-fund.js:generic-api-key:52
+3296ffe466cf510598c9df7a357d8f781288080c:src/example/index.ts:generic-api-key:33
+853779bae406b16384ea1b95dbedc7a72ba13495:build/example/create-fund.js:generic-api-key:12
+a5593f53548f401122b9893c18fdeffa8b37d2b4:src/example/index.ts:generic-api-key:43
+b5c78a58f6415ce9fbde94491bdbff405b5cdc8c:src/example/index.ts:generic-api-key:14
+c4fe24e09757d3272a050f4504ec0aaa23a39941:src/example/create-fund.ts:generic-api-key:19

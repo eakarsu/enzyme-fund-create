@@ -1,151 +1,35 @@
-# Enzyme And Aave Fork
+# Enzyme Fund Paper Control
 
-## How to setup
+This repository now has one supported executable boundary: an offline, paper-only fund risk and evidence engine. It has no broker, blockchain, wallet, mnemonic, signing, or live-order adapter. Historical Enzyme/Aave source remains quarantined for provenance review and is excluded from the build, exports, dependencies, CLI, and tests.
 
-- This will allow you to use this within you application be it , nodejs or react application. You will only be requred to install this package and then read the documentation.
+## Supported workflow
 
-- Given this protocol is written with typescript you will be provide with some in-code documentation accompanying this documentation.
+1. Ingest explicitly licensed market and custody snapshots with source event IDs, source timestamps, receipt timestamps, and contract references.
+2. Reject stale/future data and idempotency conflicts.
+3. Evaluate order notional, per-asset and gross exposure, cash, liquidity participation, daily loss, approval, short-sale, and kill-switch limits deterministically.
+4. Require independent approval for material orders, apply paper fills exactly once, and preserve partial-fill state.
+5. Record two-person error corrections, corporate actions, custody reconciliation, automatic/manual risk halts, and two-person release.
+6. Persist every fact and decision in an fsync-backed, HMAC hash-chained, append-only NDJSON evidence ledger that is verified on reopen/export.
 
-## Documentations
+No LLM participates in a limit, approval, correction, fill, or kill-switch decision.
 
+## Install and verify
 
+Use Node.js 20.19+ and the pinned Yarn 1.22.22 package manager.
 
-### Configuration
----
-
-Here the configurations
-```
-const config = {
-  ADDRESS: "",
-  PRIVATE_KEY:
-    "",
-  gasLimit: "1000000",
-  JSONRPC_URL: "", // use infura
-};
-
-export { config };
+```bash
+corepack yarn install --frozen-lockfile --ignore-scripts
+corepack yarn run verify:boundary
+corepack yarn test
+corepack yarn start
 ```
 
-#### Test Subgraph
+`yarn start` uses a unique temporary directory, performs a paper-only demonstration, verifies its evidence chain, and removes the temporary directory. `yarn legacy:build` and package publication fail closed intentionally.
 
-```
-Queries (HTTP):     https://api.thegraph.com/subgraphs/name/trust0212/radar-graph
-Subscriptions (WS): wss://api.thegraph.com/subgraphs/name/trust0212/radar-graph
-```
+The persistent library entry point is `build/governance`. Construct `EvidenceLedger.open(path, secret)` with a secret of at least 32 characters, then construct `PaperFundEngine` with an explicit `RiskPolicy`. The ledger file is created with mode `0600`; deploy its directory on encrypted storage with OS-level access control, backup, retention, and immutable archival.
 
+## Important boundary
 
+The historical tree declared conflicting/missing licensing metadata and previously contained tracked environment and wallet artifacts. Those working-tree artifacts and executable signing examples were removed. They remain in Git history, so rotation, usage investigation, authorized history rewriting, mirror/artifact cleanup, and legal/provenance sign-off are external launch blockers. See [PROVENANCE.md](PROVENANCE.md), [SECURITY_INCIDENT.md](SECURITY_INCIDENT.md), and [OPERATIONS.md](OPERATIONS.md).
 
-### Assets
-
-#### Get Denomination assests
----
-
-This will give a list all the assets found in the enzyme fork. This includes blocked and whitelisted assets. Further you can be able to filter from your user interface.
-
-```
-const denominationAssets  =  await getDenominationAssets("SUB_GRAPH_ENDPOINT_LINK");
-```
-
-#### All Assets 
----
-
-This list can help you handle different policies. Please you this list incase you want to blacklist or whitelist asset.
-
-```
-const assets  = await getAllAssetsIntegrations("SUB_GRAPH_ENDPOINT_LINK");
-```
-
-### Create a new Fund
-
-The enzyme protocol entry point is creation of a fund, what they call a vault.
-
-
-```
-import { ethers, utils } from "ethers";
-import { config } from "./../..from_config<please-change-this-to where configs are>";
-import {
- EntranceRateDirectFee,
- createNewFund,
- getManagementFees,
- PerformanceFee,
- getEntranceRateFeeConfigArgs,
- getFeesManagerConfigArgsData,
- getPerformanceFees,
- ManagementFee,
-} from "@devngeni/protocol";
-
-
- //PREP
-  const provider = new ethers.providers.JsonRpcProvider(config.JSONRPC_URL);
-
-  const signer = new ethers.Wallet(config.PRIVATE_KEY, provider);
-  const denominationAsset = "0xd0a1e359811322d97991e03f863a0c30c2cf029c"; //WETH
-  const policyManagerConfigData = utils.hexlify("0x");
-
-  const managementFee = "1"; // %
-  const performanceFee = "10"; // %
-  const entranceFee = "2"; //%
-
-  // prepare fee configs
-
-  let feeManagerSettingsData = [
-    getManagementFees(managementFee),
-    getEntranceRateFeeConfigArgs(entranceFee),
-    getPerformanceFees(performanceFee, 12),
-  ]; // value configurations
-  let fees = [
-    ManagementFee.address,
-    EntranceRateDirectFee.address,
-    PerformanceFee.address,
-  ]; // list of address
-
-  // FINAL PREP of FEES
-  const feeArgsData = await getFeesManagerConfigArgsData(
-    fees,
-    feeManagerSettingsData,
-    config.ADDRESS,
-    true
-  );
-
-  // Create new fund with a name
-
-  try {
-    const fund = await createNewFund(
-      signer,
-      "AAVE FUNDS",
-      denominationAsset,
-      10000,
-      feeArgsData!,
-      policyManagerConfigData,
-      config.gasLimit,
-      provider,
-      config.ADDRESS // WALLET OF CURRENT CONNECTED USER
-    );
-
-    console.log(fund);
-  } catch (error) {
-    console.log(error);
-  }
-```
-
-
-### List all funds 
-
-This will help you to get all funds within the system. You will have to do some pagination on the front-end
-
-```
-const funds  =  await listAllFunds("SUB_GRAPH_ENDPOINT_LINK");
-```
-
-### User Vaults/Funds
-
-```
-const userFunds  = await walletAddressUserVaults("SUB_GRAPH_ENDPOINT_LINK");
-```
-
-## List fund Investments
-
-
-```
-const investments  = await getUserAddressInvestments("SUB_GRAPH_ENDPOINT_LINK");
-```
+Real market, bank, custodian, corporate-action, and broker integrations are not claimed. Deployment owners must contract for licensed sources, implement read-only ingestion adapters against these typed contracts, and complete paper certification. A future live adapter requires a separate security-reviewed repository and explicit owner authorization; adding custody secrets here is prohibited.

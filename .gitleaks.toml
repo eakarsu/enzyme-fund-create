@@ -1,0 +1,6 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Checksum-quarantined public Ethereum contract addresses; field names such as lpToken trigger generic key rules"
+paths = ['''^src/abis/Config\.json$''']

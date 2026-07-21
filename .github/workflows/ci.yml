@@ -1,0 +1,22 @@
+name: paper-control-ci
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.19.0
+          cache: yarn
+      - run: corepack yarn install --frozen-lockfile --ignore-scripts
+      - run: corepack yarn run verify:boundary
+      - run: corepack yarn test
+      - run: git diff --check
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
